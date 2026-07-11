@@ -3,12 +3,23 @@ import pandas as pd
 import requests
 from datetime import datetime, timedelta
 from dateutil import tz
+from cache_manager import get_cache_manager
 
 @st.cache_data(ttl=3600)
 def fetch_upcoming_games_espn(days_ahead=7):
     """
     Fetch upcoming games for the next N days and return (start_date, end_date, games_df, team_ids_dict).
+    Uses local disk caching for improved performance.
     """
+    cache = get_cache_manager()
+    cache_key = f"upcoming_games_{days_ahead}"
+    
+    # Try to get from local cache first
+    cached_data = cache.get(cache_key)
+    if cached_data is not None:
+        st.caption(f"📦 Using cached upcoming games (updates daily)")
+        return cached_data
+    
     manila_zone = tz.gettz('Asia/Manila')
     now_manila = datetime.now(manila_zone)
     start_date_manila = now_manila.date()
@@ -87,7 +98,10 @@ def fetch_upcoming_games_espn(days_ahead=7):
     else:
         df = pd.DataFrame()
 
-    return start_date_manila.strftime("%Y-%m-%d"), end_date_manila.strftime("%Y-%m-%d"), df, team_ids
+    result = (start_date_manila.strftime("%Y-%m-%d"), end_date_manila.strftime("%Y-%m-%d"), df, team_ids)
+    cache.set(cache_key, result)
+    st.caption(f"🔄 Fetched fresh upcoming games (cached for 24 hours)")
+    return result
 
 
 @st.cache_data(ttl=3600)
@@ -95,7 +109,17 @@ def fetch_tomorrow_games_espn():
     """
     Fetch tomorrow's games and return (date_str, games_df, team_ids_dict).
     For backward compatibility with existing code.
+    Uses local disk caching for improved performance.
     """
+    cache = get_cache_manager()
+    cache_key = "tomorrow_games"
+    
+    # Try to get from local cache first
+    cached_data = cache.get(cache_key)
+    if cached_data is not None:
+        st.caption("📦 Using cached tomorrow's games (updates daily)")
+        return cached_data
+    
     manila_zone = tz.gettz('Asia/Manila')
     now_manila = datetime.now(manila_zone)
     tomorrow_manila = (now_manila + timedelta(days=1)).date()
@@ -162,4 +186,50 @@ def fetch_tomorrow_games_espn():
             continue
 
     df = pd.DataFrame(games_list).drop(columns=["Game ID"]) if games_list else pd.DataFrame()
-    return tomorrow_manila.strftime("%Y-%m-%d"), df, team_ids
+    result = (tomorrow_manila.strftime("%Y-%m-%d"), df, team_ids)
+    cache.set(cache_key, result)
+    st.caption("🔄 Fetched fresh tomorrow's games (cached for 24 hours)")
+    return result
+
+
+@st.cache_data(ttl=3600)
+def get_tomorrow_games_info():
+    """Get games for tomorrow and return home/away teams"""
+    try:
+        manila_zone = tz.gettz('Asia/Manila')
+        now_manila = datetime.now(manila_zone)
+        tomorrow_manila = (now_manila + timedelta(days=1)).date()
+        
+        _, games_df, team_ids = fetch_tomorrow_games_espn()
+        
+        if games_df.empty:
+            return None, None, None
+        
+        # Extract teams playing tomorrow
+        teams_playing = set()
+        games_info = []
+        
+        for _, row in games_df.iterrows():
+            home_team = row['Home Team']
+            away_team = row['Visitor Team']
+            teams_playing.add(home_team)
+            teams_playing.add(away_team)
+            games_info.append({
+                'Date': row['Date (Manila)'],
+                'Time': row['Time (Manila)'],
+                'Home': home_team,
+                'Away': away_team
+            })
+        
+        return list(teams_playing), team_ids, games_info    
+    except Exception as e:
+        return None, None, None
+    
+def get_tomorrow_opponent(selected_team: str, games_info: list) -> str:
+        """Find who the selected team plays tomorrow"""
+        for game in games_info:
+            if game['Home'] == selected_team:
+                return game['Away']
+            elif game['Away'] == selected_team:
+                return game['Home']
+        return None

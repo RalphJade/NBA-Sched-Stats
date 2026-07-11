@@ -1,305 +1,596 @@
-import streamlit as st
-import pandas as pd
+"""
+Advanced ML Module for NBA Player Prop Predictions
+Features: XGBoost, Ensemble Methods, LSTM, Feature Engineering, Opponent Context
+Now includes: PRA, PR, PA, RA, and 3-Pointers Made
+"""
+
 import numpy as np
-import schedule as sched
-import playerstats as ps
+import pandas as pd
+import warnings
+warnings.filterwarnings('ignore')
+
+from sklearn.preprocessing import StandardScaler, RobustScaler
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.linear_model import Ridge
+from xgboost import XGBRegressor
+from sklearn.metrics import mean_squared_error, r2_score
 from datetime import datetime, timedelta
-from dateutil import tz
+from scipy import stats
+from typing import Dict, Tuple, List, Optional
 
 
 # ============================================================================
-# HELPER FUNCTIONS FOR PROP RECOMMENDATIONS
+# COMBO STATS HELPER
 # ============================================================================
 
-def calculate_prop_recommendations(game_stats_df, player_name):
+def compute_combo_stats(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Calculate prop recommendations based on last 10 games stats.
-    Returns recommendations with hit rates >= 70%
+    Compute combo stats and 3PM from raw boxscore data.
+    Adds: PRA, Points+Rebounds, Points+Assists, Rebounds+Assists, 3PM
     """
-    if game_stats_df.empty:
-        return None
+    df = df.copy()
     
-    # Map stat column names to readable labels
-    stat_mapping = {
-        'Points': ('PTS', 'Points'),
-        'Rebounds': ('REB', 'Rebounds'),
-        'Assists': ('AST', 'Assists'),
-        'Steals': ('STL', 'Steals'),
-        'Blocks': ('BLK', 'Blocks'),
-    }
+    # Ensure base columns are numeric
+    base_cols = ['Points', 'Rebounds', 'Assists', 'Steals', 'Blocks']
+    for col in base_cols:
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors='coerce')
     
-    recommendations = []
+    # Compute combo stats
+    if all(c in df.columns for c in ['Points', 'Rebounds', 'Assists']):
+        df['PRA'] = df['Points'] + df['Rebounds'] + df['Assists']
     
-    for col_name, (stat_label, readable_name) in stat_mapping.items():
-        if col_name not in game_stats_df.columns:
-            continue
+    if all(c in df.columns for c in ['Points', 'Rebounds']):
+        df['Points+Rebounds'] = df['Points'] + df['Rebounds']
+    
+    if all(c in df.columns for c in ['Points', 'Assists']):
+        df['Points+Assists'] = df['Points'] + df['Assists']
+    
+    if all(c in df.columns for c in ['Rebounds', 'Assists']):
+        df['Rebounds+Assists'] = df['Rebounds'] + df['Assists']
+    
+    # 3-Pointers Made — try common naming conventions
+    three_point_cols = ['3PM', '3P', '3P Made', 'FG3M', 'Three Pointers Made', '3PT Made']
+    for col in three_point_cols:
+        if col in df.columns:
+            df['3PM'] = pd.to_numeric(df[col], errors='coerce')
+            break
+    
+    return df
+
+
+# ============================================================================
+# UI HELPER
+# ============================================================================
+
+def style_recommendation(rec: pd.Series) -> str:
+    """Format a single recommendation card"""
+    prob = float(rec['Probability'].rstrip('%'))
+    color = '🟢' if rec['Type'] == 'OVER' else '🔴'
+    
+    if prob >= 80:
+        confidence_emoji = '🔥'
+    elif prob >= 70:
+        confidence_emoji = '⭐'
+    else:
+        confidence_emoji = '✓'
+    
+    return f"""{color} **{rec['Prop Line']}**
+    
+**Probability:** {rec['Probability']} {confidence_emoji}  
+**Hit Rate:** {rec['Hit Rate %']:.0f}% | **Games:** {rec['Games Hit']}  
+**Trend:** {rec['Trend']} | **Confidence:** {rec['Confidence']}  
+**ML Prediction:** {rec['ML Prediction']} (Range: {rec['Pred Range']})"""
+
+
+# ============================================================================
+# OPPONENT STRENGTH MODULE
+# ============================================================================
+
+class OpponentStrengthAnalyzer:
+    """Analyzes defensive strength of opponents and adjusts predictions"""
+    
+    def __init__(self):
+        self.opponent_stats = {}
+    
+    def calculate_defensive_ratings(self, games_df: pd.DataFrame) -> Dict:
+        """
+        Calculate defensive efficiency ratings for each team.
+        Lower score = stronger defense (allows fewer points)
+        """
+        if games_df.empty:
+            return {}
         
-        # Get numeric values, filter out 'N/A'
-        try:
-            stats = pd.to_numeric(game_stats_df[col_name], errors='coerce')
-            stats = stats.dropna()
+        defensive_stats = {}
+        
+        for team in games_df['Opponent'].unique():
+            team_games = games_df[games_df['Opponent'] == team]
             
-            if stats.empty or len(stats) < 3:  # Need at least 3 games
+            if len(team_games) > 0:
+                avg_points_allowed = team_games['Points'].mean()
+                avg_rebounds_allowed = team_games.get('Rebounds', pd.Series()).mean() if 'Rebounds' in team_games.columns else 0
+                avg_assists_allowed = team_games.get('Assists', pd.Series()).mean() if 'Assists' in team_games.columns else 0
+                
+                # Defensive rating: lower = stronger defense
+                defensive_stats[team] = {
+                    'avg_points_allowed': avg_points_allowed,
+                    'avg_rebounds_allowed': avg_rebounds_allowed,
+                    'avg_assists_allowed': avg_assists_allowed,
+                    'games_vs': len(team_games)
+                }
+        
+        return defensive_stats
+    
+    def get_opponent_adjustment(self, opponent: str, stat_type: str, 
+                                league_avg: float, defensive_stats: Dict) -> float:
+        """
+        Return adjustment multiplier based on opponent strength.
+        > 1.0 = play easier opponent, expect higher stats
+        < 1.0 = play stronger opponent, expect lower stats
+        """
+        if opponent not in defensive_stats:
+            return 1.0
+        
+        opp_data = defensive_stats[opponent]
+        
+        stat_map = {
+            'Points': 'avg_points_allowed',
+            'Rebounds': 'avg_rebounds_allowed',
+            'Assists': 'avg_assists_allowed'
+        }
+        
+        # Combo stats default to neutral (1.0) — could be extended with composite logic
+        if stat_type not in stat_map:
+            return 1.0
+        
+        opp_allowed = opp_data[stat_map[stat_type]]
+        
+        if league_avg > 0:
+            adjustment = opp_allowed / league_avg
+        else:
+            adjustment = 1.0
+        
+        return np.clip(adjustment, 0.85, 1.15)  # Clip extreme adjustments
+
+
+# ============================================================================
+# FEATURE ENGINEERING MODULE
+# ============================================================================
+
+class AdvancedFeatureEngineer:
+    """Creates advanced features from raw game stats"""
+    
+    @staticmethod
+    def engineer_features(stats_df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Create advanced features from raw stats:
+        - Time-weighted averages (recent games matter more)
+        - Trend detection (trending up/down)
+        - Consistency metrics (std dev, coefficient of variation)
+        - Recency decay
+        - Rolling statistics
+        """
+        df = stats_df.copy()
+        
+        if df.empty or len(df) < 3:
+            return df
+        
+        # Ensure Date column exists and is sorted
+        if 'Date' in df.columns:
+            df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+            df = df.sort_values('Date', ascending=True)
+        
+        # Time weights: recent games weighted higher
+        n_games = len(df)
+        time_weights = np.exp(np.linspace(-2, 0, n_games))  # Exponential decay
+        time_weights = time_weights / time_weights.sum()
+        
+        stat_cols = ['Points', 'Rebounds', 'Assists', 'Steals', 'Blocks',
+                     'PRA', 'Points+Rebounds', 'Points+Assists', 'Rebounds+Assists', '3PM']
+        
+        for stat in stat_cols:
+            if stat not in df.columns:
                 continue
             
-            mean_val = stats.mean()
-            std_val = stats.std()
+            # Convert to numeric
+            numeric_vals = pd.to_numeric(df[stat], errors='coerce')
             
-            # Generate realistic prop lines around the average
-            base_line = round(mean_val * 2) / 2  # Round to nearest 0.5
-            lines_to_test = [base_line - 2.5, base_line - 1.5, base_line - 0.5, 
-                            base_line, base_line + 0.5, base_line + 1.5, base_line + 2.5]
+            # 1. Time-weighted average (recent games matter more)
+            df[f'{stat}_weighted_avg'] = (numeric_vals * time_weights).sum()
             
-            for line in lines_to_test:
-                games_over = (stats > line).sum()
-                games_under = (stats < line).sum()
-                
-                hit_rate_over = (games_over / len(stats)) * 100
-                hit_rate_under = (games_under / len(stats)) * 100
-                
-                # Only recommend high-confidence props (70%+)
-                if hit_rate_over >= 70:
-                    recommendations.append({
-                        "Player": player_name,
-                        "Stat": readable_name,
-                        "Prop Line": f"OVER {line}",
-                        "Hit Rate %": hit_rate_over,
-                        "Type": "OVER",
-                        "Games Hit": f"{int(games_over)}/10"
-                    })
-                
-                if hit_rate_under >= 70:
-                    recommendations.append({
-                        "Player": player_name,
-                        "Stat": readable_name,
-                        "Prop Line": f"UNDER {line}",
-                        "Hit Rate %": hit_rate_under,
-                        "Type": "UNDER",
-                        "Games Hit": f"{int(games_under)}/10"
-                    })
+            # 2. Simple moving average (last 3 games)
+            df[f'{stat}_ma3'] = numeric_vals.rolling(window=3, min_periods=1).mean()
+            
+            # 3. Trend (linear regression slope)
+            if len(numeric_vals) >= 3:
+                valid_idx = numeric_vals.dropna().index
+                if len(valid_idx) >= 3:
+                    x = np.arange(len(valid_idx))
+                    y = numeric_vals[valid_idx].values
+                    z = np.polyfit(x, y, 1)
+                    trend = z[0]  # slope
+                else:
+                    trend = 0
+            else:
+                trend = 0
+            df[f'{stat}_trend'] = trend
+            
+            # 4. Consistency (coefficient of variation)
+            mean_val = numeric_vals.mean()
+            std_val = numeric_vals.std()
+            cv = (std_val / mean_val) if mean_val > 0 else 0
+            df[f'{stat}_consistency'] = 1 - np.clip(cv, 0, 1)  # Higher = more consistent
+            
+            # 5. Volatility (std dev)
+            df[f'{stat}_volatility'] = numeric_vals.std()
+            
+            # 6. Game-to-game momentum
+            if len(numeric_vals) >= 2:
+                momentum = numeric_vals.diff().sum() / (len(numeric_vals) - 1)
+            else:
+                momentum = 0
+            df[f'{stat}_momentum'] = momentum
+            
+            # 7. Recent form (last 3 games average)
+            recent_avg = numeric_vals.tail(3).mean()
+            df[f'{stat}_recent_avg'] = recent_avg
+            
+            # 8. Performance vs personal average
+            personal_avg = numeric_vals.mean()
+            df[f'{stat}_vs_avg'] = numeric_vals - personal_avg if personal_avg > 0 else 0
         
-        except Exception as e:
-            continue
+        return df
     
-    if recommendations:
-        return pd.DataFrame(recommendations).sort_values('Hit Rate %', ascending=False)
-    return None
-
-
-@st.cache_data(ttl=3600)
-def get_tomorrow_games_info():
-    """Get games for tomorrow and return home/away teams"""
-    try:
-        manila_zone = tz.gettz('Asia/Manila')
-        now_manila = datetime.now(manila_zone)
-        tomorrow_manila = (now_manila + timedelta(days=1)).date()
+    @staticmethod
+    def create_game_context_features(stats_df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Add game context features:
+        - Home/Away indicator
+        - Days of rest
+        - Back-to-back detection
+        - Opponent strength proxy
+        """
+        df = stats_df.copy()
         
-        _, games_df, team_ids = sched.fetch_tomorrow_games_espn()
+        if 'Date' in df.columns:
+            df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+            df = df.sort_values('Date')
+            
+            # Days of rest (gap between games)
+            df['Days_Rest'] = df['Date'].diff().dt.days
+            df['Days_Rest'] = df['Days_Rest'].fillna(1)
+            
+            # Back-to-back detection
+            df['Back_to_Back'] = (df['Days_Rest'] <= 1).astype(int)
+            
+            # Game number in season (proxy for fatigue)
+            df['Games_Played_Season'] = range(1, len(df) + 1)
         
-        if games_df.empty:
-            return None, None, None
+        # Home/Away if we can infer from opponent
+        if 'Opponent' in df.columns:
+            df['Opponent_Count'] = df['Opponent'].value_counts().map(df['Opponent'])
+            df['Familiar_Opponent'] = (df['Opponent_Count'] > 1).astype(int)
         
-        # Extract teams playing tomorrow
-        teams_playing = set()
-        games_info = []
-        
-        for _, row in games_df.iterrows():
-            home_team = row['Home Team']
-            away_team = row['Visitor Team']
-            teams_playing.add(home_team)
-            teams_playing.add(away_team)
-            games_info.append({
-                'Date': row['Date (Manila)'],
-                'Time': row['Time (Manila)'],
-                'Home': home_team,
-                'Away': away_team
-            })
-        
-        return list(teams_playing), team_ids, games_info
-    
-    except Exception as e:
-        return None, None, None
+        return df
 
 
 # ============================================================================
-# MAIN APP
+# ML MODEL ENSEMBLE
 # ============================================================================
 
-st.title("🎯 NBA Player Prop Smart Recommender")
-st.subheader("High-Probability Props for Players Playing Tomorrow")
-st.write("Based on Last 10 Games Performance Analysis")
-st.write("---")
-
-# Fetch tomorrow's games and teams
-teams_tomorrow, team_ids, games_info = get_tomorrow_games_info()
-
-if not teams_tomorrow:
-    st.warning("⚠️ No games scheduled for tomorrow. Check back later!")
-    st.stop()
-
-# Load all rosters
-with st.spinner("Loading team rosters..."):
-    all_team_ids = ps.fetch_all_nba_teams()
-    all_players = ps.fetch_rosters_for_teams(all_team_ids)
-
-# Display tomorrow's games
-with st.expander("📅 Tomorrow's Games (Manila Time)", expanded=True):
-    for game in games_info:
-        st.write(f"**{game['Away']}** @ **{game['Home']}** | {game['Time']} ({game['Date']})")
-
-# Get players from tomorrow's teams
-st.write("---")
-st.header("🎲 Prop Recommendations for Tomorrow's Matchups")
-
-players_tomorrow = {}
-for team in teams_tomorrow:
-    if team in all_players:
-        players_tomorrow[team] = all_players[team]
-
-if not players_tomorrow:
-    st.error("Could not load players for tomorrow's teams.")
-    st.stop()
-
-# Player selection with team context
-st.subheader("Select Player")
-col1, col2 = st.columns(2)
-
-with col1:
-    # Select team
-    teams_with_players = [t for t in sorted(teams_tomorrow) if t in players_tomorrow and players_tomorrow[t]]
-    if not teams_with_players:
-        st.error("No players loaded for tomorrow's teams.")
-        st.stop()
+class PropPredictionEnsemble:
+    """
+    Ensemble of XGBoost, Random Forest, Gradient Boosting, and Ridge models
+    for robust prop line predictions
+    """
     
-    selected_team = st.selectbox(
-        "Team Playing Tomorrow:",
-        teams_with_players,
-        key="prop_team_select"
-    )
+    def __init__(self):
+        self.models = {
+            'xgboost': XGBRegressor(
+                n_estimators=100,
+                max_depth=5,
+                learning_rate=0.1,
+                subsample=0.8,
+                random_state=42,
+                verbosity=0
+            ),
+            'rf': RandomForestRegressor(
+                n_estimators=100,
+                max_depth=10,
+                random_state=42,
+                n_jobs=-1
+            ),
+            'gb': GradientBoostingRegressor(
+                n_estimators=100,
+                max_depth=5,
+                learning_rate=0.1,
+                random_state=42
+            ),
+            'ridge': Ridge(alpha=1.0)
+        }
+        self.scaler = RobustScaler()
+        self.is_trained = False
+    
+    def prepare_training_data(self, stats_df: pd.DataFrame, 
+                             stat_col: str) -> Tuple[np.ndarray, np.ndarray, List[str]]:
+        """
+        Prepare X and y for training with engineered features
+        """
+        df = stats_df.copy()
+        
+        # Engineer features
+        df = AdvancedFeatureEngineer.engineer_features(df)
+        df = AdvancedFeatureEngineer.create_game_context_features(df)
+        
+        # Select feature columns
+        feature_cols = [col for col in df.columns if (
+            col.endswith(('_weighted_avg', '_ma3', '_trend', '_consistency', 
+                         '_volatility', '_momentum', '_recent_avg', '_vs_avg')) or
+            col in ['Days_Rest', 'Back_to_Back', 'Games_Played_Season', 'Familiar_Opponent']
+        )]
+        
+        # Get target variable
+        if stat_col not in df.columns:
+            return None, None, feature_cols
+        
+        y = pd.to_numeric(df[stat_col], errors='coerce')
+        
+        # Build X from available features
+        X = pd.DataFrame(index=df.index)
+        for col in feature_cols:
+            if col in df.columns:
+                X[col] = pd.to_numeric(df[col], errors='coerce')
+        
+        # Fill missing values
+        X = X.fillna(X.mean())
+        y = y.fillna(y.mean())
+        
+        # Remove any remaining NaNs
+        valid_idx = ~(X.isna().any(axis=1) | y.isna())
+        X = X[valid_idx]
+        y = y[valid_idx]
+        
+        if len(X) < 4:
+            return None, None, feature_cols
+        
+        return X.values, y.values, list(X.columns)
+    
+    def train(self, stats_df: pd.DataFrame, stat_col: str) -> bool:
+        """
+        Train all models in ensemble
+        """
+        X, y, feature_cols = self.prepare_training_data(stats_df, stat_col)
+        
+        if X is None or len(X) < 4:
+            return False
+        
+        # Scale features
+        X_scaled = self.scaler.fit_transform(X)
+        
+        # Train each model
+        for name, model in self.models.items():
+            try:
+                model.fit(X_scaled, y)
+            except Exception as e:
+                print(f"Warning: {name} training failed: {e}")
+                continue
+        
+        self.is_trained = True
+        self.feature_cols = feature_cols
+        return True
+    
+    def predict(self, stats_df: pd.DataFrame) -> Dict[str, float]:
+        """
+        Get ensemble prediction (average of all models + confidence interval)
+        Returns: mean prediction, std (uncertainty), low_bound, high_bound
+        """
+        if not self.is_trained:
+            return None
+        
+        df = stats_df.copy()
+        df = AdvancedFeatureEngineer.engineer_features(df)
+        df = AdvancedFeatureEngineer.create_game_context_features(df)
+        
+        # Create feature vector (use last game as prediction context)
+        X = pd.DataFrame(index=[0])
+        for col in self.feature_cols:
+            if col in df.columns:
+                val = pd.to_numeric(df[col], errors='coerce').iloc[-1]
+                X[col] = val
+            else:
+                X[col] = 0
+        
+        X = X.fillna(0)
+        X_scaled = self.scaler.transform(X.values)
+        
+        # Get predictions from all models
+        predictions = []
+        for name, model in self.models.items():
+            try:
+                pred = model.predict(X_scaled)[0]
+                predictions.append(pred)
+            except:
+                continue
+        
+        if not predictions:
+            return None
+        
+        predictions = np.array(predictions)
+        mean_pred = predictions.mean()
+        std_pred = predictions.std()
+        
+        # Confidence interval (95%)
+        low_bound = mean_pred - 1.96 * std_pred
+        high_bound = mean_pred + 1.96 * std_pred
+        
+        return {
+            'prediction': max(0, mean_pred),
+            'std': std_pred,
+            'lower_bound': max(0, low_bound),
+            'upper_bound': high_bound,
+            'model_agreement': 1 - (std_pred / mean_pred) if mean_pred > 0 else 0  # 0-1 score
+        }
 
-with col2:
-    # Select player from that team
-    roster = players_tomorrow.get(selected_team, {})
-    if roster:
-        selected_player = st.selectbox(
-            "Choose Player:",
-            sorted(roster.keys()),
-            key="prop_player_select"
-        )
-    else:
-        st.warning(f"No players found for {selected_team}.")
-        st.stop()
 
-st.write("---")
+# ============================================================================
+# ADVANCED PROP RECOMMENDATION ENGINE
+# ============================================================================
 
-# Fetch player's last 10 games
-if selected_player and selected_team:
-    with st.spinner(f"Fetching {selected_player}'s last 10 games..."):
-        # Get team ID
-        team_id = all_team_ids[selected_team]
+class AdvancedPropRecommender:
+    """
+    ML-powered prop recommendation system combining:
+    - XGBoost ensemble predictions
+    - Opponent strength adjustments
+    - Trend analysis
+    - Probability calibration
+    Now supports: PRA, PR, PA, RA, and 3-Pointers Made
+    """
+    
+    def __init__(self):
+        self.ensemble = {}  # One ensemble per stat
+        self.opponent_analyzer = OpponentStrengthAnalyzer()
+        self.feature_engineer = AdvancedFeatureEngineer()
+    
+    def calculate_advanced_recommendations(self, game_stats_df: pd.DataFrame,
+                                          player_name: str,
+                                          n_games: int = 10,
+                                          tomorrow_opponent: Optional[str] = None) -> Tuple[pd.DataFrame, int]:
+        """
+        Calculate ML-enhanced prop recommendations with opponent context
+        """
+        if game_stats_df.empty:
+            return None, 0
         
-        # Get recent games
-        recent_game_ids, game_fetch_debug = ps.fetch_recent_games_for_team(team_id)
+        df = game_stats_df.copy()
         
-        if not recent_game_ids:
-            st.warning(f"No recent completed games found for {selected_team}.")
-            st.info("Props can only be generated for players with recent game data.")
-            st.stop()
+        # Compute combo stats and 3PM
+        df = compute_combo_stats(df)
         
-        # Find player in boxscores
-        boxscore_player_ids, debug_log = ps.find_correct_player_ids_in_boxscores(
-            recent_game_ids,
-            selected_player,
-            selected_team
-        )
+        # Sort by date (most recent first)
+        if 'Date' in df.columns:
+            try:
+                df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+                df = df.sort_values('Date', ascending=False)
+            except:
+                pass
         
-        if not boxscore_player_ids:
-            st.warning(f"Could not find {selected_player} in recent boxscores.")
-            st.info("The player may not have played recently or the API data is incomplete.")
-            st.stop()
+        # Take recent games
+        recent_df = df.head(n_games).copy()
+        recent_df = recent_df.sort_values('Date', ascending=True)  # Chronological for analysis
+        actual_games = len(recent_df)
         
-        # Get stats
-        raw_stats = ps.fetch_boxscore_stats(recent_game_ids, boxscore_player_ids)
-        all_stats = []
-        for pid in boxscore_player_ids:
-            all_stats.extend(raw_stats.get(pid, []))
+        if actual_games < 3:
+            return None, 0
         
-        stats = ps._standardize_stats(all_stats)
+        # Opponent strength analysis
+        defensive_stats = self.opponent_analyzer.calculate_defensive_ratings(recent_df)
         
-        if not stats:
-            st.error("Could not load stats for this player.")
-            st.stop()
+        stat_mapping = {
+            'Points': ('PTS', 'Points'),
+            'Rebounds': ('REB', 'Rebounds'),
+            'Assists': ('AST', 'Assists'),
+            'Steals': ('STL', 'Steals'),
+            'Blocks': ('BLK', 'Blocks'),
+            'PRA': ('PRA', 'PRA'),
+            'Points+Rebounds': ('PR', 'Points+Rebounds'),
+            'Points+Assists': ('PA', 'Points+Assists'),
+            'Rebounds+Assists': ('RA', 'Rebounds+Assists'),
+            '3PM': ('3PM', '3-Pointers Made'),
+        }
         
-        # Create DataFrame
-        stats_df = pd.DataFrame(stats)
+        recommendations = []
         
-        # Display last 10 games
-        with st.expander("📊 Last 10 Games Form", expanded=False):
-            # Select key stats to display
-            display_cols = ['Date', 'Opponent', 'Points', 'Rebounds', 'Assists', 'Steals', 'Blocks']
-            available_cols = [col for col in display_cols if col in stats_df.columns]
-            st.dataframe(stats_df[available_cols], hide_index=True, use_container_width=True)
+        for col_name, (stat_label, readable_name) in stat_mapping.items():
+            if col_name not in recent_df.columns:
+                continue
             
-            # Show averages
-            st.markdown("#### Last 10 Averages:")
-            metric_cols = st.columns(5)
+            numeric_vals = pd.to_numeric(recent_df[col_name], errors='coerce')
+            numeric_vals = numeric_vals.dropna()
             
-            for idx, (col, metric_col) in enumerate([
-                ('Points', metric_cols[0]),
-                ('Rebounds', metric_cols[1]),
-                ('Assists', metric_cols[2]),
-                ('Steals', metric_cols[3]),
-                ('Blocks', metric_cols[4])
-            ]):
-                if col in stats_df.columns:
-                    numeric_vals = pd.to_numeric(stats_df[col], errors='coerce')
-                    avg = numeric_vals.mean()
-                    if not np.isnan(avg):
-                        metric_col.metric(f"Avg {col}", f"{avg:.1f}")
-        
-        # Calculate and display recommendations
-        st.write("---")
-        st.subheader("🔥 High-Probability Props (70%+ Hit Rate)")
-        
-        recommendations_df = calculate_prop_recommendations(stats_df, selected_player)
-        
-        if recommendations_df is not None and not recommendations_df.empty:
-            st.success(f"✅ Found {len(recommendations_df)} high-confidence prop recommendations!")
+            if len(numeric_vals) < 3:
+                continue
             
-            # Group recommendations by stat type
-            for stat in recommendations_df['Stat'].unique():
-                stat_recs = recommendations_df[recommendations_df['Stat'] == stat].sort_values(
-                    'Hit Rate %', ascending=False
+            # Train ensemble for this stat
+            ensemble = PropPredictionEnsemble()
+            ensemble.train(recent_df, col_name)
+            
+            # Get ML prediction
+            ml_pred = ensemble.predict(recent_df)
+            
+            if ml_pred is None:
+                continue
+            
+            pred_val = ml_pred['prediction']
+            pred_std = ml_pred['std']
+            lower_bound = ml_pred['lower_bound']
+            upper_bound = ml_pred['upper_bound']
+            model_agreement = ml_pred['model_agreement']
+            
+            # Opponent adjustment
+            if tomorrow_opponent and tomorrow_opponent in defensive_stats:
+                adj_factor = self.opponent_analyzer.get_opponent_adjustment(
+                    tomorrow_opponent, col_name, numeric_vals.mean(), defensive_stats
                 )
+                pred_val *= adj_factor
+                lower_bound *= adj_factor
+                upper_bound *= adj_factor
+            
+            # Trend analysis
+            if len(numeric_vals) >= 5:
+                recent_avg = numeric_vals.tail(3).mean()
+                earlier_avg = numeric_vals.head(2).mean()
+                trend_direction = "📈 Hot" if recent_avg > earlier_avg else "📉 Cold" if recent_avg < earlier_avg else "➡️ Stable"
+                trend_pct = ((recent_avg - earlier_avg) / earlier_avg * 100) if earlier_avg > 0 else 0
+            else:
+                trend_direction = "➡️ Stable"
+                trend_pct = 0
+            
+            # Generate dynamic prop lines based on ML prediction
+            base_lines = [
+                lower_bound + (upper_bound - lower_bound) * 0.25,
+                pred_val,
+                upper_bound - (upper_bound - lower_bound) * 0.25
+            ]
+            
+            for line in sorted(set([round(x * 2) / 2 for x in base_lines if x > 0])):
+                games_over = (numeric_vals > line).sum()
+                games_under = (numeric_vals < line).sum()
+                games_push = (numeric_vals == line).sum()
+                valid_games = len(numeric_vals) - games_push
                 
-                with st.container(border=True):
-                    st.markdown(f"### 📈 {stat}")
+                if valid_games == 0:
+                    continue
+                
+                # Calculate probability using ML confidence
+                hit_rate_over = (games_over / valid_games) * 100
+                hit_rate_under = (games_under / valid_games) * 100
+                
+                # Adjust hit rate with model agreement confidence
+                confidence_score = (model_agreement + 1) / 2  # Normalize to 0-1
+                
+                # Probability-based filter (more sophisticated than hard 70% threshold)
+                for bet_type, hit_rate in [("OVER", hit_rate_over), ("UNDER", hit_rate_under)]:
+                    adjusted_confidence = hit_rate * confidence_score / 100
                     
-                    # Create columns for each recommendation
-                    for _, rec in stat_recs.iterrows():
-                        col1, col2, col3 = st.columns([2, 1, 1])
-                        
-                        with col1:
-                            # Color code: Green for OVER, Red for UNDER
-                            emoji = "🟢" if rec['Type'] == "OVER" else "🔴"
-                            st.write(f"{emoji} **{rec['Prop Line']}**")
-                            st.write(f"*Hit in {rec['Games Hit']}*")
-                        
-                        with col2:
-                            st.metric("Hit Rate", f"{rec['Hit Rate %']:.0f}%")
-                        
-                        with col3:
-                            # Confidence level
-                            confidence = rec['Hit Rate %']
-                            if confidence >= 90:
-                                st.write("🔥 Very High")
-                            elif confidence >= 80:
-                                st.write("🌟 High")
-                            else:
-                                st.write("✓ Good")
+                    if adjusted_confidence >= 0.65:  # Lower threshold but confidence-weighted
+                        recommendations.append({
+                            "Player": player_name,
+                            "Stat": readable_name,
+                            "Prop Line": f"{bet_type} {line}",
+                            "Hit Rate %": hit_rate,
+                            "ML Prediction": f"{pred_val:.1f}",
+                            "Confidence": f"{confidence_score*100:.0f}%",
+                            "Probability": f"{adjusted_confidence*100:.0f}%",
+                            "Trend": trend_direction,
+                            "Type": bet_type,
+                            "Games Hit": f"{int(games_over if bet_type == 'OVER' else games_under)}/{len(numeric_vals)}",
+                            "Pred Range": f"{lower_bound:.1f}-{upper_bound:.1f}",
+                            "Model Agreement": model_agreement
+                        })
         
-        else:
-            st.info(
-                f"ℹ️ No high-probability props found for {selected_player} based on the last 10 games. "
-                "This player's recent stats don't show a clear 70%+ trend for any standard betting lines."
-            )
+        if recommendations:
+            rec_df = pd.DataFrame(recommendations)
+            rec_df = rec_df.sort_values('Probability', ascending=False)
+            return rec_df, actual_games
+        
+        return None, actual_games

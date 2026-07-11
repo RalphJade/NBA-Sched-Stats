@@ -3,11 +3,21 @@ import pandas as pd
 import requests
 from datetime import datetime, timedelta
 from dateutil import tz
+from cache_manager import get_cache_manager
 
 
 @st.cache_data(ttl=86400)
 def fetch_all_nba_teams():
     """Fetch all 30 NBA teams for the season."""
+    cache = get_cache_manager()
+    cache_key = "all_nba_teams"
+    
+    # Try to get from local cache first
+    cached_data = cache.get(cache_key)
+    if cached_data is not None:
+        st.caption("📦 Using cached team data (updates daily)")
+        return cached_data
+    
     url = "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams?limit=50"
     fallback = {
         "Atlanta Hawks": "1", "Boston Celtics": "2", "Brooklyn Nets": "17",
@@ -30,19 +40,40 @@ def fetch_all_nba_teams():
             team = entry.get('team', {})
             name = team.get('displayName')
             tid = team.get('id')
+            logo = team.get('logos', [{}])[0].get('href', 'https://www.nba.com/assets/logos/teams/primary/web/NBA.svg')
             if name and tid:
-                teams[name] = str(tid)
-        return teams if teams else fallback
+                teams[name] = {"id": str(tid), "logo": logo}
+        if teams:
+            cache.set(cache_key, teams)
+            st.caption("🔄 Fetched fresh team data (cached for 24 hours)")
+            return teams
+        result = {k: {"id": v, "logo": "https://www.nba.com/assets/logos/teams/primary/web/NBA.svg"} 
+                for k, v in fallback.items()}
+        cache.set(cache_key, result)
+        return result
     except Exception:
-        return fallback
+        result = {k: {"id": v, "logo": "https://www.nba.com/assets/logos/teams/primary/web/NBA.svg"} 
+                for k, v in fallback.items()}
+        cache.set(cache_key, result)
+        return result
 
 
 @st.cache_data(ttl=3600)
 def fetch_rosters_for_teams(team_ids):
     """Fetch rosters for the given teams."""
+    cache = get_cache_manager()
+    cache_key = "all_rosters"
+    
+    # Try to get from local cache first
+    cached_data = cache.get(cache_key)
+    if cached_data is not None:
+        st.caption("📦 Using cached rosters (updates daily)")
+        return cached_data
+    
     players_dict = {}
     failed = []
-    for team_name, team_id in team_ids.items():
+    for team_name, team_data in team_ids.items():
+        team_id = team_data["id"]
         try:
             roster_url = f"https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/{team_id}/roster"
             resp = requests.get(roster_url, timeout=10)
@@ -56,14 +87,28 @@ def fetch_rosters_for_teams(team_ids):
             for athlete in athletes:
                 name = athlete.get('displayName') or athlete.get('fullName')
                 pid = athlete.get('id')
-                if name and pid:
-                    players_dict[team_name][name] = str(pid)
+                img = athlete.get('headshot', {}).get('href', "")
+                position = athlete.get('position', {}).get('abbreviation', 'N/A')
+                jersey = athlete.get('jersey', 'N/A')
+                age = athlete.get('age', 'N/A')
+                height = athlete.get('displayHeight', 'N/A')
+                weight = athlete.get('displayWeight', 'N/A')
+                experience = athlete.get('experience', {}).get('years', 'N/A')
+                
+                if name and pid: # Ensure player has a name and ID
+                    players_dict[team_name][name] = {"id": str(pid), "image": img, "position": position, 
+                                                      "jersey": jersey, "age": age, "height": height, 
+                                                      "weight": weight, "experience": experience}
         except Exception:
             failed.append(team_name)
             players_dict[team_name] = {}
     
     if failed:
         st.caption(f"⚠️ Could not load rosters for {len(failed)} team(s).")
+    
+    cache.set(cache_key, players_dict)
+    if not failed:
+        st.caption("🔄 Fetched fresh roster data (cached for 24 hours)")
     return players_dict
 
 
@@ -116,6 +161,16 @@ def fetch_recent_games_for_team(team_id, max_games=10):
     Fetch the last N completed game IDs for a specific team.
     Uses multiple fallback strategies to find completed games.
     """
+    cache = get_cache_manager()
+    cache_key = f"recent_games_{team_id}"
+    
+    # Try to get from local cache first
+    cached_data = cache.get(cache_key)
+    if cached_data is not None:
+        game_ids, debug_info = cached_data
+        debug_info.insert(0, "📦 Using cached game list (updates every 30 min)")
+        return game_ids, debug_info
+    
     url = f"https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/{team_id}/schedule"
     game_ids = []
     debug_info = []
@@ -130,6 +185,7 @@ def fetch_recent_games_for_team(team_id, max_games=10):
         
         if not events:
             debug_info.append("No events found in schedule")
+            cache.set(cache_key, (game_ids, debug_info))
             return game_ids, debug_info
         
         # Try to find completed games by checking from newest to oldest
@@ -163,6 +219,8 @@ def fetch_recent_games_for_team(team_id, max_games=10):
     except Exception as e:
         debug_info.append(f"Error fetching schedule: {str(e)}")
     
+    cache.set(cache_key, (game_ids, debug_info))
+    debug_info.insert(0, "🔄 Fetched fresh game list (cached for 30 min)")
     return game_ids, debug_info
 
 

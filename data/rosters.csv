@@ -1,0 +1,538 @@
+Team,Player Name,Player ID,Image,Position,Jersey,Age,Height,Weight,Experience
+Atlanta Hawks,Nickeil Alexander-Walker,4278039,https://a.espncdn.com/i/headshots/nba/players/full/4278039.png,G,7,27,"6' 5""",205 lbs,6
+Atlanta Hawks,Tony Bradley,4065673,https://a.espncdn.com/i/headshots/nba/players/full/4065673.png,C,13,28,"6' 10""",248 lbs,7
+Atlanta Hawks,Dyson Daniels,4869342,https://a.espncdn.com/i/headshots/nba/players/full/4869342.png,G,5,23,"6' 7""",199 lbs,3
+Atlanta Hawks,RayJ Dennis,4431941,https://a.espncdn.com/i/headshots/nba/players/full/4431941.png,G,00,25,"6' 2""",180 lbs,1
+Atlanta Hawks,Keshon Gilbert,4585618,https://a.espncdn.com/i/headshots/nba/players/full/4585618.png,G,N/A,22,"6' 4""",200 lbs,N/A
+Atlanta Hawks,Mouhamed Gueye,4712863,https://a.espncdn.com/i/headshots/nba/players/full/4712863.png,F,18,23,"6' 11""",210 lbs,2
+Atlanta Hawks,Buddy Hield,2990984,https://a.espncdn.com/i/headshots/nba/players/full/2990984.png,G,8,33,"6' 4""",220 lbs,9
+Atlanta Hawks,Caleb Houstan,4433623,https://a.espncdn.com/i/headshots/nba/players/full/4433623.png,G,33,23,"6' 8""",205 lbs,3
+Atlanta Hawks,Jalen Johnson,4701230,https://a.espncdn.com/i/headshots/nba/players/full/4701230.png,F,1,24,"6' 8""",219 lbs,4
+Atlanta Hawks,Corey Kispert,4280151,https://a.espncdn.com/i/headshots/nba/players/full/4280151.png,F,24,27,"6' 6""",224 lbs,4
+Atlanta Hawks,Christian Koloko,4431778,https://a.espncdn.com/i/headshots/nba/players/full/4431778.png,C,35,25,"6' 11""",225 lbs,3
+Atlanta Hawks,Jonathan Kuminga,4433247,https://a.espncdn.com/i/headshots/nba/players/full/4433247.png,F,0,23,"6' 7""",225 lbs,4
+Atlanta Hawks,Jock Landale,3146557,https://a.espncdn.com/i/headshots/nba/players/full/3146557.png,C,31,30,"6' 11""",255 lbs,4
+Atlanta Hawks,CJ McCollum,2490149,https://a.espncdn.com/i/headshots/nba/players/full/2490149.png,G,3,34,"6' 3""",190 lbs,12
+Atlanta Hawks,Asa Newell,4873201,https://a.espncdn.com/i/headshots/nba/players/full/4873201.png,F,14,20,"6' 10""",220 lbs,0
+Atlanta Hawks,Onyeka Okongwu,4431680,https://a.espncdn.com/i/headshots/nba/players/full/4431680.png,F,17,25,"6' 10""",240 lbs,5
+Atlanta Hawks,Zaccharie Risacher,5211175,https://a.espncdn.com/i/headshots/nba/players/full/5211175.png,F,10,21,"6' 8""",200 lbs,1
+Atlanta Hawks,Gabe Vincent,3137259,https://a.espncdn.com/i/headshots/nba/players/full/3137259.png,G,4,29,"6' 2""",200 lbs,6
+Atlanta Hawks,Keaton Wallace,4279118,https://a.espncdn.com/i/headshots/nba/players/full/4279118.png,G,2,27,"6' 3""",185 lbs,1
+Boston Celtics,Dalano Banton,4397885,https://a.espncdn.com/i/headshots/nba/players/full/4397885.png,F,45,26,"6' 8""",203 lbs,4
+Boston Celtics,Jaylen Brown,3917376,https://a.espncdn.com/i/headshots/nba/players/full/3917376.png,G,7,29,"6' 6""",223 lbs,9
+Boston Celtics,Luka Garza,4277951,https://a.espncdn.com/i/headshots/nba/players/full/4277951.png,C,52,27,"6' 10""",243 lbs,4
+Boston Celtics,Hugo Gonzalez,5175647,https://a.espncdn.com/i/headshots/nba/players/full/5175647.png,G,28,20,"6' 6""",200 lbs,0
+Boston Celtics,Ron Harper Jr.,4397251,https://a.espncdn.com/i/headshots/nba/players/full/4397251.png,G,13,26,"6' 5""",233 lbs,3
+Boston Celtics,Sam Hauser,4065804,https://a.espncdn.com/i/headshots/nba/players/full/4065804.png,F,30,28,"6' 7""",217 lbs,4
+Boston Celtics,Payton Pritchard,4066354,https://a.espncdn.com/i/headshots/nba/players/full/4066354.png,G,11,28,"6' 1""",195 lbs,5
+Boston Celtics,Neemias Queta,4397424,https://a.espncdn.com/i/headshots/nba/players/full/4397424.png,C,88,26,"7' 0""",248 lbs,4
+Boston Celtics,Baylor Scheierman,4593841,https://a.espncdn.com/i/headshots/nba/players/full/4593841.png,G,55,25,"6' 6""",205 lbs,1
+Boston Celtics,Max Shulga,4701992,https://a.espncdn.com/i/headshots/nba/players/full/4701992.png,G,44,23,"6' 4""",210 lbs,0
+Boston Celtics,Jayson Tatum,4065648,https://a.espncdn.com/i/headshots/nba/players/full/4065648.png,F,0,28,"6' 8""",210 lbs,8
+Boston Celtics,John Tonje,4593043,https://a.espncdn.com/i/headshots/nba/players/full/4593043.png,G,8,25,"6' 4""",218 lbs,0
+Boston Celtics,Nikola Vucevic,6478,https://a.espncdn.com/i/headshots/nba/players/full/6478.png,C,4,35,"6' 9""",260 lbs,14
+Boston Celtics,Jordan Walsh,4683689,https://a.espncdn.com/i/headshots/nba/players/full/4683689.png,G,27,22,"6' 6""",205 lbs,2
+Boston Celtics,Derrick White,3078576,https://a.espncdn.com/i/headshots/nba/players/full/3078576.png,G,9,31,"6' 4""",190 lbs,8
+Boston Celtics,Amari Williams,4702745,https://a.espncdn.com/i/headshots/nba/players/full/4702745.png,F,77,24,"6' 11""",250 lbs,0
+Brooklyn Nets,Ochai Agbaji,4397018,https://a.espncdn.com/i/headshots/nba/players/full/4397018.png,G,30,26,"6' 5""",215 lbs,3
+Brooklyn Nets,Nic Claxton,4278067,https://a.espncdn.com/i/headshots/nba/players/full/4278067.png,C,33,27,"6' 11""",215 lbs,6
+Brooklyn Nets,Noah Clowney,4712896,https://a.espncdn.com/i/headshots/nba/players/full/4712896.png,F,21,21,"6' 10""",210 lbs,2
+Brooklyn Nets,Egor Demin,5175643,https://a.espncdn.com/i/headshots/nba/players/full/5175643.png,G,8,20,"6' 8""",200 lbs,0
+Brooklyn Nets,Tyson Etienne,4432887,https://a.espncdn.com/i/headshots/nba/players/full/4432887.png,G,10,26,"6' 0""",200 lbs,1
+Brooklyn Nets,Chaney Johnson,5174655,https://a.espncdn.com/i/headshots/nba/players/full/5174655.png,F,31,23,"6' 8""",225 lbs,0
+Brooklyn Nets,E.J. Liddell,4432821,https://a.espncdn.com/i/headshots/nba/players/full/4432821.png,F,9,25,"6' 6""",240 lbs,2
+Brooklyn Nets,Terance Mann,3907823,https://a.espncdn.com/i/headshots/nba/players/full/3907823.png,G,14,29,"6' 6""",215 lbs,6
+Brooklyn Nets,Josh Minott,4687718,https://a.espncdn.com/i/headshots/nba/players/full/4687718.png,F,00,23,"6' 8""",205 lbs,3
+Brooklyn Nets,Michael Porter Jr.,4278104,https://a.espncdn.com/i/headshots/nba/players/full/4278104.png,F,17,27,"6' 10""",218 lbs,6
+Brooklyn Nets,Drake Powell,5037873,https://a.espncdn.com/i/headshots/nba/players/full/5037873.png,G,4,20,"6' 5""",195 lbs,0
+Brooklyn Nets,Ben Saraf,5242502,https://a.espncdn.com/i/headshots/nba/players/full/5242502.png,G,77,20,"6' 6""",200 lbs,0
+Brooklyn Nets,Trevon Scott,3934620,,F,13,29,"6' 8""",225 lbs,1
+Brooklyn Nets,Day'Ron Sharpe,4432194,https://a.espncdn.com/i/headshots/nba/players/full/4432194.png,C,20,24,"6' 10""",265 lbs,4
+Brooklyn Nets,Malachi Smith,4397784,,G,18,26,"6' 4""",205 lbs,0
+Brooklyn Nets,Nolan Traore,5279130,https://a.espncdn.com/i/headshots/nba/players/full/5279130.png,G,88,19,"6' 3""",185 lbs,0
+Brooklyn Nets,Ziaire Williams,4433137,https://a.espncdn.com/i/headshots/nba/players/full/4433137.png,F,1,24,"6' 9""",185 lbs,4
+Brooklyn Nets,Jalen Wilson,4431714,https://a.espncdn.com/i/headshots/nba/players/full/4431714.png,F,22,25,"6' 6""",220 lbs,2
+Brooklyn Nets,Danny Wolf,5107173,https://a.espncdn.com/i/headshots/nba/players/full/5107173.png,F,2,22,"6' 11""",250 lbs,0
+Charlotte Hornets,LaMelo Ball,4432816,https://a.espncdn.com/i/headshots/nba/players/full/4432816.png,G,1,24,"6' 7""",180 lbs,5
+Charlotte Hornets,Miles Bridges,4066383,https://a.espncdn.com/i/headshots/nba/players/full/4066383.png,F,0,28,"6' 7""",225 lbs,6
+Charlotte Hornets,Pat Connaughton,2578239,https://a.espncdn.com/i/headshots/nba/players/full/2578239.png,G,21,33,"6' 5""",209 lbs,10
+Charlotte Hornets,Moussa Diabate,4433249,https://a.espncdn.com/i/headshots/nba/players/full/4433249.png,F,14,24,"6' 10""",210 lbs,3
+Charlotte Hornets,Tosan Evbuomwan,4597865,https://a.espncdn.com/i/headshots/nba/players/full/4597865.png,F,20,25,"6' 8""",217 lbs,2
+Charlotte Hornets,Josh Green,4432811,https://a.espncdn.com/i/headshots/nba/players/full/4432811.png,G,10,25,"6' 6""",200 lbs,5
+Charlotte Hornets,PJ Hall,4701225,https://a.espncdn.com/i/headshots/nba/players/full/4701225.png,C,16,24,"6' 8""",245 lbs,1
+Charlotte Hornets,Sion James,4602025,https://a.espncdn.com/i/headshots/nba/players/full/4602025.png,G,4,23,"6' 5""",220 lbs,0
+Charlotte Hornets,Ryan Kalkbrenner,4576060,https://a.espncdn.com/i/headshots/nba/players/full/4576060.png,C,11,24,"7' 1""",256 lbs,0
+Charlotte Hornets,Kon Knueppel,5061575,https://a.espncdn.com/i/headshots/nba/players/full/5061575.png,G,7,20,"6' 6""",215 lbs,0
+Charlotte Hornets,Tre Mann,4432819,https://a.espncdn.com/i/headshots/nba/players/full/4432819.png,G,23,25,"6' 4""",178 lbs,4
+Charlotte Hornets,Liam McNeeley,5239590,https://a.espncdn.com/i/headshots/nba/players/full/5239590.png,G,33,20,"6' 7""",210 lbs,0
+Charlotte Hornets,Brandon Miller,4433287,https://a.espncdn.com/i/headshots/nba/players/full/4433287.png,F,24,23,"6' 7""",200 lbs,2
+Charlotte Hornets,Antonio Reeves,4592686,https://a.espncdn.com/i/headshots/nba/players/full/4592686.png,G,12,25,"6' 5""",205 lbs,1
+Charlotte Hornets,Tidjane Salaun,5211176,https://a.espncdn.com/i/headshots/nba/players/full/5211176.png,F,31,20,"6' 10""",207 lbs,1
+Charlotte Hornets,Xavier Tillman,4277964,https://a.espncdn.com/i/headshots/nba/players/full/4277964.png,F,26,27,"6' 8""",245 lbs,5
+Charlotte Hornets,Coby White,4395651,https://a.espncdn.com/i/headshots/nba/players/full/4395651.png,G,3,26,"6' 4""",195 lbs,6
+Charlotte Hornets,Grant Williams,4066218,https://a.espncdn.com/i/headshots/nba/players/full/4066218.png,F,2,27,"6' 7""",236 lbs,6
+Chicago Bulls,Matas Buzelis,4711294,https://a.espncdn.com/i/headshots/nba/players/full/4711294.png,F,14,21,"6' 8""",209 lbs,1
+Chicago Bulls,Zach Collins,4066650,https://a.espncdn.com/i/headshots/nba/players/full/4066650.png,F,12,28,"6' 9""",250 lbs,8
+Chicago Bulls,Rob Dillingham,4684275,https://a.espncdn.com/i/headshots/nba/players/full/4684275.png,G,7,21,"6' 2""",175 lbs,1
+Chicago Bulls,Noa Essengue,5242496,https://a.espncdn.com/i/headshots/nba/players/full/5242496.png,F,24,19,"6' 8""",200 lbs,0
+Chicago Bulls,Josh Giddey,4871145,https://a.espncdn.com/i/headshots/nba/players/full/4871145.png,G,3,23,"6' 7""",216 lbs,4
+Chicago Bulls,Mouhamadou Gueye,4592933,https://a.espncdn.com/i/headshots/nba/players/full/4592933.png,F,16,27,"6' 9""",210 lbs,1
+Chicago Bulls,Tre Jones,4395626,https://a.espncdn.com/i/headshots/nba/players/full/4395626.png,G,30,26,"6' 1""",185 lbs,5
+Chicago Bulls,Yuki Kawamura,5159895,https://a.espncdn.com/i/headshots/nba/players/full/5159895.png,G,8,25,"5' 7""",159 lbs,1
+Chicago Bulls,Mac McClung,4397071,https://a.espncdn.com/i/headshots/nba/players/full/4397071.png,G,5,27,"6' 2""",185 lbs,3
+Chicago Bulls,Leonard Miller,5044385,https://a.espncdn.com/i/headshots/nba/players/full/5044385.png,F,11,22,"6' 10""",220 lbs,2
+Chicago Bulls,Isaac Okoro,4432822,https://a.espncdn.com/i/headshots/nba/players/full/4432822.png,F,35,25,"6' 4""",225 lbs,5
+Chicago Bulls,Lachlan Olbrich,5107156,https://a.espncdn.com/i/headshots/nba/players/full/5107156.png,C,47,22,"6' 8""",236 lbs,0
+Chicago Bulls,Nick Richards,4278076,https://a.espncdn.com/i/headshots/nba/players/full/4278076.png,C,13,28,"6' 11""",245 lbs,5
+Chicago Bulls,Collin Sexton,4277811,https://a.espncdn.com/i/headshots/nba/players/full/4277811.png,G,2,27,"6' 3""",190 lbs,7
+Chicago Bulls,Anfernee Simons,4351851,https://a.espncdn.com/i/headshots/nba/players/full/4351851.png,G,22,26,"6' 3""",200 lbs,7
+Chicago Bulls,Jalen Smith,4397189,https://a.espncdn.com/i/headshots/nba/players/full/4397189.png,F,25,26,"6' 8""",215 lbs,5
+Chicago Bulls,Patrick Williams,4431687,https://a.espncdn.com/i/headshots/nba/players/full/4431687.png,F,44,24,"6' 6""",215 lbs,5
+Chicago Bulls,Guerschon Yabusele,4017844,https://a.espncdn.com/i/headshots/nba/players/full/4017844.png,F,28,30,"6' 7""",265 lbs,3
+Cleveland Cavaliers,Jarrett Allen,4066328,https://a.espncdn.com/i/headshots/nba/players/full/4066328.png,C,31,28,"6' 9""",243 lbs,8
+Cleveland Cavaliers,Thomas Bryant,3934723,https://a.espncdn.com/i/headshots/nba/players/full/3934723.png,C,3,28,"6' 9""",248 lbs,8
+Cleveland Cavaliers,Keon Ellis,4702177,https://a.espncdn.com/i/headshots/nba/players/full/4702177.png,G,14,26,"6' 4""",175 lbs,3
+Cleveland Cavaliers,Tristan Enaruna,4431734,https://a.espncdn.com/i/headshots/nba/players/full/4431734.png,F,21,24,"6' 7""",220 lbs,0
+Cleveland Cavaliers,James Harden,3992,https://a.espncdn.com/i/headshots/nba/players/full/3992.png,G,1,36,"6' 5""",220 lbs,16
+Cleveland Cavaliers,Sam Merrill,4066757,https://a.espncdn.com/i/headshots/nba/players/full/4066757.png,G,5,30,"6' 4""",205 lbs,5
+Cleveland Cavaliers,Riley Minix,5177362,https://a.espncdn.com/i/headshots/nba/players/full/5177362.png,F,12,25,"6' 7""",230 lbs,1
+Cleveland Cavaliers,Donovan Mitchell,3908809,https://a.espncdn.com/i/headshots/nba/players/full/3908809.png,G,45,29,"6' 2""",215 lbs,8
+Cleveland Cavaliers,Evan Mobley,4432158,https://a.espncdn.com/i/headshots/nba/players/full/4432158.png,C,4,24,"6' 11""",215 lbs,4
+Cleveland Cavaliers,Larry Nance Jr.,2580365,https://a.espncdn.com/i/headshots/nba/players/full/2580365.png,F,22,33,"6' 6""",245 lbs,10
+Cleveland Cavaliers,Craig Porter Jr.,4701233,https://a.espncdn.com/i/headshots/nba/players/full/4701233.png,G,9,26,"6' 1""",180 lbs,2
+Cleveland Cavaliers,Tyrese Proctor,5023693,https://a.espncdn.com/i/headshots/nba/players/full/5023693.png,G,24,22,"6' 4""",185 lbs,0
+Cleveland Cavaliers,Olivier Sarr,4278046,https://a.espncdn.com/i/headshots/nba/players/full/4278046.png,F,33,27,"6' 10""",240 lbs,3
+Cleveland Cavaliers,Dennis Schroder,3032979,https://a.espncdn.com/i/headshots/nba/players/full/3032979.png,G,8,32,"6' 1""",175 lbs,12
+Cleveland Cavaliers,Max Strus,4065778,https://a.espncdn.com/i/headshots/nba/players/full/4065778.png,G,2,30,"6' 5""",215 lbs,6
+Cleveland Cavaliers,Nae'Qwan Tomlin,5106268,https://a.espncdn.com/i/headshots/nba/players/full/5106268.png,F,35,25,"6' 8""",210 lbs,1
+Cleveland Cavaliers,Jaylon Tyson,4683747,https://a.espncdn.com/i/headshots/nba/players/full/4683747.png,G,20,23,"6' 6""",215 lbs,1
+Cleveland Cavaliers,Dean Wade,3912848,https://a.espncdn.com/i/headshots/nba/players/full/3912848.png,F,32,29,"6' 9""",228 lbs,6
+Dallas Mavericks,Marvin Bagley III,4277848,https://a.espncdn.com/i/headshots/nba/players/full/4277848.png,F,35,27,"6' 10""",235 lbs,7
+Dallas Mavericks,Max Christie,4432582,https://a.espncdn.com/i/headshots/nba/players/full/4432582.png,G,00,23,"6' 5""",190 lbs,3
+Dallas Mavericks,Moussa Cisse,4701208,https://a.espncdn.com/i/headshots/nba/players/full/4701208.png,C,30,23,"6' 11""",220 lbs,0
+Dallas Mavericks,Cooper Flagg,5041939,https://a.espncdn.com/i/headshots/nba/players/full/5041939.png,F,32,19,"6' 9""",205 lbs,0
+Dallas Mavericks,Daniel Gafford,4278049,https://a.espncdn.com/i/headshots/nba/players/full/4278049.png,F,21,27,"6' 10""",265 lbs,6
+Dallas Mavericks,Kyrie Irving,6442,https://a.espncdn.com/i/headshots/nba/players/full/6442.png,G,11,34,"6' 2""",195 lbs,14
+Dallas Mavericks,AJ Johnson,5170947,https://a.espncdn.com/i/headshots/nba/players/full/5170947.png,G,8,21,"6' 5""",160 lbs,1
+Dallas Mavericks,Dereck Lively II,4683688,https://a.espncdn.com/i/headshots/nba/players/full/4683688.png,C,2,22,"7' 1""",230 lbs,2
+Dallas Mavericks,Naji Marshall,4278594,https://a.espncdn.com/i/headshots/nba/players/full/4278594.png,F,13,28,"6' 6""",220 lbs,5
+Dallas Mavericks,Caleb Martin,3138160,https://a.espncdn.com/i/headshots/nba/players/full/3138160.png,F,16,30,"6' 5""",205 lbs,6
+Dallas Mavericks,Khris Middleton,6609,https://a.espncdn.com/i/headshots/nba/players/full/6609.png,F,20,34,"6' 7""",222 lbs,13
+Dallas Mavericks,Ryan Nembhard,4433629,https://a.espncdn.com/i/headshots/nba/players/full/4433629.png,G,9,23,"5' 11""",180 lbs,0
+Dallas Mavericks,John Poulakidas,4898238,,G,1,23,"6' 6""",205 lbs,0
+Dallas Mavericks,Dwight Powell,2531367,https://a.espncdn.com/i/headshots/nba/players/full/2531367.png,F,7,34,"6' 10""",240 lbs,11
+Dallas Mavericks,Tyler Smith,5167876,https://a.espncdn.com/i/headshots/nba/players/full/5167876.png,F,23,21,"6' 9""",224 lbs,1
+Dallas Mavericks,Klay Thompson,6475,https://a.espncdn.com/i/headshots/nba/players/full/6475.png,G,31,36,"6' 5""",220 lbs,14
+Dallas Mavericks,P.J. Washington,4278078,https://a.espncdn.com/i/headshots/nba/players/full/4278078.png,F,25,27,"6' 7""",230 lbs,6
+Dallas Mavericks,Brandon Williams,4397040,https://a.espncdn.com/i/headshots/nba/players/full/4397040.png,G,10,26,"6' 1""",190 lbs,3
+Denver Nuggets,Christian Braun,4431767,https://a.espncdn.com/i/headshots/nba/players/full/4431767.png,G,0,25,"6' 6""",220 lbs,3
+Denver Nuggets,Bruce Brown,4065670,https://a.espncdn.com/i/headshots/nba/players/full/4065670.png,G,11,29,"6' 4""",202 lbs,7
+Denver Nuggets,Aaron Gordon,3064290,https://a.espncdn.com/i/headshots/nba/players/full/3064290.png,F,32,30,"6' 8""",235 lbs,11
+Denver Nuggets,Tim Hardaway Jr.,2528210,https://a.espncdn.com/i/headshots/nba/players/full/2528210.png,G,10,34,"6' 5""",205 lbs,12
+Denver Nuggets,DaRon Holmes II,4433607,https://a.espncdn.com/i/headshots/nba/players/full/4433607.png,F,14,23,"6' 9""",225 lbs,0
+Denver Nuggets,Cameron Johnson,3138196,https://a.espncdn.com/i/headshots/nba/players/full/3138196.png,F,23,30,"6' 8""",210 lbs,6
+Denver Nuggets,Nikola Jokic,3112335,https://a.espncdn.com/i/headshots/nba/players/full/3112335.png,C,15,31,"6' 11""",284 lbs,10
+Denver Nuggets,Curtis Jones,4898369,https://a.espncdn.com/i/headshots/nba/players/full/4898369.png,G,1,24,"6' 3""",195 lbs,0
+Denver Nuggets,Spencer Jones,4592427,https://a.espncdn.com/i/headshots/nba/players/full/4592427.png,F,21,24,"6' 7""",225 lbs,1
+Denver Nuggets,Tyus Jones,3135046,https://a.espncdn.com/i/headshots/nba/players/full/3135046.png,G,5,30,"6' 0""",196 lbs,10
+Denver Nuggets,Jamal Murray,3936299,https://a.espncdn.com/i/headshots/nba/players/full/3936299.png,G,27,29,"6' 4""",215 lbs,9
+Denver Nuggets,Zeke Nnaji,4431690,https://a.espncdn.com/i/headshots/nba/players/full/4431690.png,F,22,25,"6' 10""",240 lbs,5
+Denver Nuggets,Jalen Pickett,4398390,https://a.espncdn.com/i/headshots/nba/players/full/4398390.png,G,24,26,"6' 2""",202 lbs,2
+Denver Nuggets,David Roddy,4593041,https://a.espncdn.com/i/headshots/nba/players/full/4593041.png,F,45,25,"6' 4""",255 lbs,3
+Denver Nuggets,KJ Simpson,4683834,https://a.espncdn.com/i/headshots/nba/players/full/4683834.png,G,25,23,"6' 2""",189 lbs,1
+Denver Nuggets,Julian Strawther,4432181,https://a.espncdn.com/i/headshots/nba/players/full/4432181.png,G,3,24,"6' 6""",205 lbs,2
+Denver Nuggets,Jonas Valanciunas,6477,https://a.espncdn.com/i/headshots/nba/players/full/6477.png,C,17,34,"6' 11""",265 lbs,13
+Denver Nuggets,Peyton Watson,4576087,https://a.espncdn.com/i/headshots/nba/players/full/4576087.png,G,8,23,"6' 8""",200 lbs,3
+Detroit Pistons,Cade Cunningham,4432166,https://a.espncdn.com/i/headshots/nba/players/full/4432166.png,G,2,24,"6' 6""",220 lbs,4
+Detroit Pistons,Jalen Duren,4433621,https://a.espncdn.com/i/headshots/nba/players/full/4433621.png,C,0,22,"6' 10""",250 lbs,3
+Detroit Pistons,Javonte Green,2596112,https://a.espncdn.com/i/headshots/nba/players/full/2596112.png,G,31,32,"6' 5""",205 lbs,6
+Detroit Pistons,Tobias Harris,6440,https://a.espncdn.com/i/headshots/nba/players/full/6440.png,F,12,33,"6' 8""",226 lbs,14
+Detroit Pistons,Ronald Holland II,4683771,https://a.espncdn.com/i/headshots/nba/players/full/4683771.png,F,5,20,"6' 8""",206 lbs,1
+Detroit Pistons,Kevin Huerter,4066372,https://a.espncdn.com/i/headshots/nba/players/full/4066372.png,G,27,27,"6' 6""",198 lbs,7
+Detroit Pistons,Daniss Jenkins,5107199,https://a.espncdn.com/i/headshots/nba/players/full/5107199.png,G,24,24,"6' 4""",165 lbs,1
+Detroit Pistons,Isaac Jones,5107818,https://a.espncdn.com/i/headshots/nba/players/full/5107818.png,C,3,26,"6' 8""",245 lbs,1
+Detroit Pistons,Chaz Lanier,4700852,https://a.espncdn.com/i/headshots/nba/players/full/4700852.png,G,20,24,"6' 3""",206 lbs,0
+Detroit Pistons,Caris LeVert,2991043,https://a.espncdn.com/i/headshots/nba/players/full/2991043.png,G,8,31,"6' 7""",205 lbs,9
+Detroit Pistons,Wendell Moore Jr.,4592187,https://a.espncdn.com/i/headshots/nba/players/full/4592187.png,F,14,24,"6' 5""",215 lbs,3
+Detroit Pistons,Paul Reed,4278562,https://a.espncdn.com/i/headshots/nba/players/full/4278562.png,F,7,26,"6' 9""",210 lbs,5
+Detroit Pistons,Duncan Robinson,3157465,https://a.espncdn.com/i/headshots/nba/players/full/3157465.png,F,55,32,"6' 7""",215 lbs,7
+Detroit Pistons,Marcus Sasser,4432107,https://a.espncdn.com/i/headshots/nba/players/full/4432107.png,G,25,25,"6' 1""",195 lbs,2
+Detroit Pistons,Tolu Smith,4397882,https://a.espncdn.com/i/headshots/nba/players/full/4397882.png,F,35,25,"6' 11""",250 lbs,1
+Detroit Pistons,Isaiah Stewart,4432810,https://a.espncdn.com/i/headshots/nba/players/full/4432810.png,F,28,24,"6' 8""",250 lbs,5
+Detroit Pistons,Ausar Thompson,4684742,https://a.espncdn.com/i/headshots/nba/players/full/4684742.png,G,9,23,"6' 7""",205 lbs,2
+Golden State Warriors,Charles Bassey,4397886,https://a.espncdn.com/i/headshots/nba/players/full/4397886.png,C,28,25,"6' 10""",230 lbs,4
+Golden State Warriors,Jimmy Butler III,6430,https://a.espncdn.com/i/headshots/nba/players/full/6430.png,F,10,36,"6' 6""",230 lbs,14
+Golden State Warriors,LJ Cryer,4433149,https://a.espncdn.com/i/headshots/nba/players/full/4433149.png,G,18,24,"6' 0""",200 lbs,0
+Golden State Warriors,Seth Curry,2326307,https://a.espncdn.com/i/headshots/nba/players/full/2326307.png,G,31,35,"6' 1""",185 lbs,12
+Golden State Warriors,Stephen Curry,3975,https://a.espncdn.com/i/headshots/nba/players/full/3975.png,G,30,38,"6' 2""",185 lbs,16
+Golden State Warriors,Draymond Green,6589,https://a.espncdn.com/i/headshots/nba/players/full/6589.png,F,23,36,"6' 6""",230 lbs,13
+Golden State Warriors,Al Horford,3213,https://a.espncdn.com/i/headshots/nba/players/full/3213.png,C,20,39,"6' 8""",240 lbs,18
+Golden State Warriors,Malevy Leons,4897449,https://a.espncdn.com/i/headshots/nba/players/full/4897449.png,F,33,26,"6' 9""",203 lbs,1
+Golden State Warriors,De'Anthony Melton,4066436,https://a.espncdn.com/i/headshots/nba/players/full/4066436.png,G,8,27,"6' 2""",200 lbs,7
+Golden State Warriors,Moses Moody,4432171,https://a.espncdn.com/i/headshots/nba/players/full/4432171.png,G,4,23,"6' 5""",211 lbs,4
+Golden State Warriors,Gary Payton II,3134903,https://a.espncdn.com/i/headshots/nba/players/full/3134903.png,G,0,33,"6' 2""",195 lbs,9
+Golden State Warriors,Brandin Podziemski,4709138,https://a.espncdn.com/i/headshots/nba/players/full/4709138.png,G,2,23,"6' 4""",205 lbs,2
+Golden State Warriors,Kristaps Porzingis,3102531,https://a.espncdn.com/i/headshots/nba/players/full/3102531.png,C,7,30,"7' 2""",240 lbs,10
+Golden State Warriors,Quinten Post,4593016,https://a.espncdn.com/i/headshots/nba/players/full/4593016.png,C,21,26,"7' 0""",238 lbs,1
+Golden State Warriors,Will Richard,4897262,https://a.espncdn.com/i/headshots/nba/players/full/4897262.png,G,3,23,"6' 3""",206 lbs,0
+Golden State Warriors,Gui Santos,4997536,https://a.espncdn.com/i/headshots/nba/players/full/4997536.png,F,15,23,"6' 7""",185 lbs,2
+Golden State Warriors,Pat Spencer,4592714,https://a.espncdn.com/i/headshots/nba/players/full/4592714.png,G,61,29,"6' 2""",205 lbs,2
+Golden State Warriors,Nate Williams,4397821,https://a.espncdn.com/i/headshots/nba/players/full/4397821.png,G,19,27,"6' 5""",205 lbs,3
+Golden State Warriors,Omer Yurtseven,3074213,https://a.espncdn.com/i/headshots/nba/players/full/3074213.png,C,77,27,"6' 11""",275 lbs,3
+Houston Rockets,Steven Adams,2991235,https://a.espncdn.com/i/headshots/nba/players/full/2991235.png,C,12,32,"6' 11""",265 lbs,12
+Houston Rockets,Clint Capela,3102529,https://a.espncdn.com/i/headshots/nba/players/full/3102529.png,C,30,32,"6' 10""",256 lbs,11
+Houston Rockets,Isaiah Crawford,4592857,https://a.espncdn.com/i/headshots/nba/players/full/4592857.png,F,27,24,"6' 6""",220 lbs,1
+Houston Rockets,JD Davison,4576085,https://a.espncdn.com/i/headshots/nba/players/full/4576085.png,G,4,23,"6' 1""",195 lbs,3
+Houston Rockets,Kevin Durant,3202,https://a.espncdn.com/i/headshots/nba/players/full/3202.png,F,7,37,"6' 11""",240 lbs,18
+Houston Rockets,Tari Eason,4433192,https://a.espncdn.com/i/headshots/nba/players/full/4433192.png,F,17,25,"6' 8""",215 lbs,3
+Houston Rockets,Dorian Finney-Smith,2578185,https://a.espncdn.com/i/headshots/nba/players/full/2578185.png,F,2,33,"6' 7""",220 lbs,9
+Houston Rockets,Jeff Green,3209,https://a.espncdn.com/i/headshots/nba/players/full/3209.png,F,32,39,"6' 8""",235 lbs,18
+Houston Rockets,Aaron Holiday,3922230,https://a.espncdn.com/i/headshots/nba/players/full/3922230.png,G,0,29,"6' 0""",185 lbs,7
+Houston Rockets,Tristen Newton,4592965,https://a.espncdn.com/i/headshots/nba/players/full/4592965.png,G,13,25,"6' 5""",190 lbs,1
+Houston Rockets,Josh Okogie,4065663,https://a.espncdn.com/i/headshots/nba/players/full/4065663.png,G,20,27,"6' 4""",213 lbs,7
+Houston Rockets,Alperen Sengun,4871144,https://a.espncdn.com/i/headshots/nba/players/full/4871144.png,C,28,23,"6' 11""",243 lbs,4
+Houston Rockets,Reed Sheppard,4711272,https://a.espncdn.com/i/headshots/nba/players/full/4711272.png,G,15,21,"6' 2""",185 lbs,1
+Houston Rockets,Jabari Smith Jr.,4432639,https://a.espncdn.com/i/headshots/nba/players/full/4432639.png,F,10,23,"6' 11""",220 lbs,3
+Houston Rockets,Jae'Sean Tate,3136777,https://a.espncdn.com/i/headshots/nba/players/full/3136777.png,F,8,30,"6' 4""",230 lbs,5
+Houston Rockets,Amen Thompson,4684740,https://a.espncdn.com/i/headshots/nba/players/full/4684740.png,G,1,23,"6' 7""",200 lbs,2
+Houston Rockets,Fred VanVleet,2991230,https://a.espncdn.com/i/headshots/nba/players/full/2991230.png,G,5,32,"6' 0""",197 lbs,9
+Indiana Pacers,Kobe Brown,4431752,https://a.espncdn.com/i/headshots/nba/players/full/4431752.png,G,24,26,"6' 7""",250 lbs,2
+Indiana Pacers,Johnny Furphy,5157066,https://a.espncdn.com/i/headshots/nba/players/full/5157066.png,G,12,21,"6' 8""",200 lbs,1
+Indiana Pacers,Tyrese Haliburton,4396993,https://a.espncdn.com/i/headshots/nba/players/full/4396993.png,G,0,26,"6' 5""",185 lbs,5
+Indiana Pacers,Jay Huff,4065731,https://a.espncdn.com/i/headshots/nba/players/full/4065731.png,C,32,28,"7' 1""",240 lbs,4
+Indiana Pacers,Quenton Jackson,4592829,https://a.espncdn.com/i/headshots/nba/players/full/4592829.png,G,29,27,"6' 4""",173 lbs,3
+Indiana Pacers,Kam Jones,4697268,https://a.espncdn.com/i/headshots/nba/players/full/4697268.png,G,7,24,"6' 4""",200 lbs,0
+Indiana Pacers,T.J. McConnell,2530530,https://a.espncdn.com/i/headshots/nba/players/full/2530530.png,G,9,34,"6' 1""",190 lbs,10
+Indiana Pacers,Andrew Nembhard,4395712,https://a.espncdn.com/i/headshots/nba/players/full/4395712.png,G,2,26,"6' 4""",191 lbs,3
+Indiana Pacers,Aaron Nesmith,4396909,https://a.espncdn.com/i/headshots/nba/players/full/4396909.png,G,23,26,"6' 5""",215 lbs,5
+Indiana Pacers,Taelon Peter,4703421,https://a.espncdn.com/i/headshots/nba/players/full/4703421.png,G,4,24,"6' 3""",185 lbs,0
+Indiana Pacers,Micah Potter,4066399,https://a.espncdn.com/i/headshots/nba/players/full/4066399.png,C,11,28,"6' 9""",248 lbs,4
+Indiana Pacers,Ben Sheppard,4433076,https://a.espncdn.com/i/headshots/nba/players/full/4433076.png,G,26,24,"6' 6""",190 lbs,2
+Indiana Pacers,Pascal Siakam,3149673,https://a.espncdn.com/i/headshots/nba/players/full/3149673.png,F,43,32,"6' 8""",245 lbs,9
+Indiana Pacers,Jalen Slawson,4398207,https://a.espncdn.com/i/headshots/nba/players/full/4398207.png,F,18,26,"6' 7""",215 lbs,1
+Indiana Pacers,Ethan Thompson,4278516,https://a.espncdn.com/i/headshots/nba/players/full/4278516.png,G,55,27,"6' 5""",195 lbs,0
+Indiana Pacers,Obi Toppin,4278355,https://a.espncdn.com/i/headshots/nba/players/full/4278355.png,F,1,28,"6' 9""",220 lbs,5
+Indiana Pacers,Jarace Walker,5106060,https://a.espncdn.com/i/headshots/nba/players/full/5106060.png,F,5,22,"6' 7""",235 lbs,2
+Indiana Pacers,Ivica Zubac,4017837,https://a.espncdn.com/i/headshots/nba/players/full/4017837.png,C,40,29,"7' 0""",240 lbs,9
+LA Clippers,Nicolas Batum,3416,https://a.espncdn.com/i/headshots/nba/players/full/3416.png,F,33,37,"6' 7""",230 lbs,17
+LA Clippers,Bradley Beal,6580,https://a.espncdn.com/i/headshots/nba/players/full/6580.png,G,0,32,"6' 4""",207 lbs,13
+LA Clippers,Bogdan Bogdanovic,3037789,https://a.espncdn.com/i/headshots/nba/players/full/3037789.png,G,7,33,"6' 5""",225 lbs,8
+LA Clippers,Cam Christie,4845363,https://a.espncdn.com/i/headshots/nba/players/full/4845363.png,G,12,20,"6' 5""",190 lbs,1
+LA Clippers,John Collins,3908845,https://a.espncdn.com/i/headshots/nba/players/full/3908845.png,F,20,28,"6' 9""",226 lbs,8
+LA Clippers,Kris Dunn,2991139,https://a.espncdn.com/i/headshots/nba/players/full/2991139.png,G,8,32,"6' 3""",205 lbs,9
+LA Clippers,Darius Garland,4396907,https://a.espncdn.com/i/headshots/nba/players/full/4396907.png,G,10,26,"6' 1""",192 lbs,6
+LA Clippers,Isaiah Jackson,4432170,https://a.espncdn.com/i/headshots/nba/players/full/4432170.png,F,23,24,"6' 8""",205 lbs,4
+LA Clippers,Derrick Jones Jr.,3936099,https://a.espncdn.com/i/headshots/nba/players/full/3936099.png,F,5,29,"6' 6""",210 lbs,9
+LA Clippers,Kawhi Leonard,6450,https://a.espncdn.com/i/headshots/nba/players/full/6450.png,F,2,34,"6' 6""",225 lbs,14
+LA Clippers,Brook Lopez,3448,https://a.espncdn.com/i/headshots/nba/players/full/3448.png,C,11,38,"7' 1""",282 lbs,17
+LA Clippers,Bennedict Mathurin,4683634,https://a.espncdn.com/i/headshots/nba/players/full/4683634.png,G,9,23,"6' 5""",210 lbs,3
+LA Clippers,Jordan Miller,4396818,https://a.espncdn.com/i/headshots/nba/players/full/4396818.png,G,22,26,"6' 5""",194 lbs,2
+LA Clippers,Yanic Konan Niederhauser,5108024,https://a.espncdn.com/i/headshots/nba/players/full/5108024.png,C,14,23,"6' 11""",242 lbs,0
+LA Clippers,Norchad Omier,4702134,,F,55,24,"6' 5""",248 lbs,0
+LA Clippers,Sean Pedulla,4709131,,G,00,23,"6' 1""",195 lbs,0
+LA Clippers,Kobe Sanders,4702352,https://a.espncdn.com/i/headshots/nba/players/full/4702352.png,G,4,23,"6' 8""",207 lbs,0
+LA Clippers,TyTy Washington Jr.,4683749,https://a.espncdn.com/i/headshots/nba/players/full/4683749.png,G,15,24,"6' 3""",195 lbs,3
+Los Angeles Lakers,Deandre Ayton,4278129,https://a.espncdn.com/i/headshots/nba/players/full/4278129.png,C,5,27,"7' 0""",252 lbs,7
+Los Angeles Lakers,Luka Doncic,3945274,https://a.espncdn.com/i/headshots/nba/players/full/3945274.png,G,77,27,"6' 8""",230 lbs,7
+Los Angeles Lakers,Rui Hachimura,4066648,https://a.espncdn.com/i/headshots/nba/players/full/4066648.png,F,28,28,"6' 8""",230 lbs,6
+Los Angeles Lakers,Jaxson Hayes,4397077,https://a.espncdn.com/i/headshots/nba/players/full/4397077.png,C,11,25,"7' 0""",220 lbs,6
+Los Angeles Lakers,Bronny James,4683774,https://a.espncdn.com/i/headshots/nba/players/full/4683774.png,G,9,21,"6' 2""",210 lbs,1
+Los Angeles Lakers,LeBron James,1966,https://a.espncdn.com/i/headshots/nba/players/full/1966.png,F,23,41,"6' 9""",250 lbs,22
+Los Angeles Lakers,Luke Kennard,3913174,https://a.espncdn.com/i/headshots/nba/players/full/3913174.png,G,10,29,"6' 5""",206 lbs,8
+Los Angeles Lakers,Maxi Kleber,2960236,https://a.espncdn.com/i/headshots/nba/players/full/2960236.png,F,14,34,"6' 10""",240 lbs,8
+Los Angeles Lakers,Dalton Knecht,4897943,https://a.espncdn.com/i/headshots/nba/players/full/4897943.png,F,4,25,"6' 6""",215 lbs,1
+Los Angeles Lakers,Jake LaRavia,4592691,https://a.espncdn.com/i/headshots/nba/players/full/4592691.png,F,12,24,"6' 7""",235 lbs,3
+Los Angeles Lakers,Chris Manon,4702972,https://a.espncdn.com/i/headshots/nba/players/full/4702972.png,G,30,24,"6' 4""",209 lbs,0
+Los Angeles Lakers,Austin Reaves,4066457,https://a.espncdn.com/i/headshots/nba/players/full/4066457.png,G,15,27,"6' 5""",197 lbs,4
+Los Angeles Lakers,Marcus Smart,2990992,https://a.espncdn.com/i/headshots/nba/players/full/2990992.png,G,36,32,"6' 3""",220 lbs,11
+Los Angeles Lakers,Nick Smith Jr.,4683686,https://a.espncdn.com/i/headshots/nba/players/full/4683686.png,G,20,22,"6' 2""",185 lbs,2
+Los Angeles Lakers,Adou Thiero,5060631,https://a.espncdn.com/i/headshots/nba/players/full/5060631.png,F,1,22,"6' 8""",220 lbs,0
+Los Angeles Lakers,Drew Timme,4431695,https://a.espncdn.com/i/headshots/nba/players/full/4431695.png,F,17,25,"6' 10""",235 lbs,1
+Los Angeles Lakers,Jarred Vanderbilt,4278077,https://a.espncdn.com/i/headshots/nba/players/full/4278077.png,F,2,27,"6' 8""",214 lbs,7
+Memphis Grizzlies,Santi Aldama,4593125,https://a.espncdn.com/i/headshots/nba/players/full/4593125.png,F,7,25,"7' 0""",215 lbs,4
+Memphis Grizzlies,Adama Bal,4896365,,G,72,22,"6' 7""",200 lbs,0
+Memphis Grizzlies,Kentavious Caldwell-Pope,2581018,https://a.espncdn.com/i/headshots/nba/players/full/2581018.png,G,3,33,"6' 5""",204 lbs,12
+Memphis Grizzlies,Walter Clayton Jr.,4896372,https://a.espncdn.com/i/headshots/nba/players/full/4896372.png,G,4,23,"6' 4""",195 lbs,0
+Memphis Grizzlies,Cedric Coward,4903027,https://a.espncdn.com/i/headshots/nba/players/full/4903027.png,F,23,22,"6' 5""",206 lbs,0
+Memphis Grizzlies,Zach Edey,4600663,https://a.espncdn.com/i/headshots/nba/players/full/4600663.png,C,14,24,"7' 3""",305 lbs,1
+Memphis Grizzlies,Taj Gibson,3986,https://a.espncdn.com/i/headshots/nba/players/full/3986.png,F,67,40,"6' 9""",232 lbs,16
+Memphis Grizzlies,Taylor Hendricks,4684806,https://a.espncdn.com/i/headshots/nba/players/full/4684806.png,F,22,22,"6' 9""",215 lbs,2
+Memphis Grizzlies,GG Jackson,5105550,https://a.espncdn.com/i/headshots/nba/players/full/5105550.png,F,45,21,"6' 9""",210 lbs,2
+Memphis Grizzlies,Ty Jerome,4065733,https://a.espncdn.com/i/headshots/nba/players/full/4065733.png,G,2,28,"6' 5""",195 lbs,6
+Memphis Grizzlies,Jahmai Mashack,4683934,https://a.espncdn.com/i/headshots/nba/players/full/4683934.png,G,21,23,"6' 3""",197 lbs,0
+Memphis Grizzlies,Ja Morant,4279888,https://a.espncdn.com/i/headshots/nba/players/full/4279888.png,G,12,26,"6' 2""",174 lbs,6
+Memphis Grizzlies,Toby Okani,4700873,,F,5,24,"6' 8""",210 lbs,0
+Memphis Grizzlies,Scotty Pippen Jr.,4431785,https://a.espncdn.com/i/headshots/nba/players/full/4431785.png,G,1,25,"6' 2""",170 lbs,3
+Memphis Grizzlies,Olivier-Maxence Prosper,4595400,https://a.espncdn.com/i/headshots/nba/players/full/4595400.png,F,18,23,"6' 7""",230 lbs,2
+Memphis Grizzlies,Rayan Rupert,5099752,https://a.espncdn.com/i/headshots/nba/players/full/5099752.png,G,21,21,"6' 7""",205 lbs,2
+Memphis Grizzlies,Javon Small,4781746,https://a.espncdn.com/i/headshots/nba/players/full/4781746.png,G,10,23,"6' 1""",190 lbs,0
+Memphis Grizzlies,Cam Spencer,4433083,https://a.espncdn.com/i/headshots/nba/players/full/4433083.png,G,24,26,"6' 3""",205 lbs,1
+Memphis Grizzlies,Jaylen Wells,5112087,https://a.espncdn.com/i/headshots/nba/players/full/5112087.png,F,0,22,"6' 7""",206 lbs,1
+Memphis Grizzlies,Dariq Whitehead,4432735,https://a.espncdn.com/i/headshots/nba/players/full/4432735.png,F,0,21,"6' 6""",220 lbs,1
+Memphis Grizzlies,Lucas Williamson,4279147,,G,55,27,"6' 4""",205 lbs,0
+Miami Heat,Bam Adebayo,4066261,https://a.espncdn.com/i/headshots/nba/players/full/4066261.png,C,13,28,"6' 9""",260 lbs,8
+Miami Heat,Simone Fontecchio,3899664,https://a.espncdn.com/i/headshots/nba/players/full/3899664.png,F,0,30,"6' 7""",220 lbs,3
+Miami Heat,Myron Gardner,4431772,https://a.espncdn.com/i/headshots/nba/players/full/4431772.png,F,15,25,"6' 5""",225 lbs,0
+Miami Heat,Vladislav Goldin,4700818,https://a.espncdn.com/i/headshots/nba/players/full/4700818.png,C,50,25,"7' 0""",255 lbs,0
+Miami Heat,Tyler Herro,4395725,https://a.espncdn.com/i/headshots/nba/players/full/4395725.png,G,14,26,"6' 5""",205 lbs,6
+Miami Heat,Kasparas Jakucionis,5214640,https://a.espncdn.com/i/headshots/nba/players/full/5214640.png,G,25,19,"6' 5""",205 lbs,0
+Miami Heat,Jaime Jaquez Jr.,4432848,https://a.espncdn.com/i/headshots/nba/players/full/4432848.png,F,11,25,"6' 6""",230 lbs,2
+Miami Heat,Keshad Johnson,4431786,https://a.espncdn.com/i/headshots/nba/players/full/4431786.png,F,16,24,"6' 6""",230 lbs,1
+Miami Heat,Nikola Jovic,4997528,https://a.espncdn.com/i/headshots/nba/players/full/4997528.png,F,5,22,"6' 10""",240 lbs,3
+Miami Heat,Trevor Keels,4432645,https://a.espncdn.com/i/headshots/nba/players/full/4432645.png,G,8,22,"6' 4""",221 lbs,1
+Miami Heat,Pelle Larsson,4601025,https://a.espncdn.com/i/headshots/nba/players/full/4601025.png,G,9,25,"6' 5""",215 lbs,1
+Miami Heat,Davion Mitchell,4278053,https://a.espncdn.com/i/headshots/nba/players/full/4278053.png,G,45,27,"6' 0""",210 lbs,4
+Miami Heat,Norman Powell,2595516,https://a.espncdn.com/i/headshots/nba/players/full/2595516.png,G,24,32,"6' 4""",215 lbs,10
+Miami Heat,Dru Smith,4066993,https://a.espncdn.com/i/headshots/nba/players/full/4066993.png,G,12,28,"6' 2""",200 lbs,3
+Miami Heat,Kel'el Ware,5105623,https://a.espncdn.com/i/headshots/nba/players/full/5105623.png,C,7,22,"7' 0""",250 lbs,1
+Miami Heat,Andrew Wiggins,3059319,https://a.espncdn.com/i/headshots/nba/players/full/3059319.png,F,22,31,"6' 7""",210 lbs,11
+Miami Heat,Jahmir Young,4433133,https://a.espncdn.com/i/headshots/nba/players/full/4433133.png,G,17,25,"6' 0""",185 lbs,1
+Milwaukee Bucks,Alex Antetokounmpo,4432452,,F,29,24,"6' 8""",214 lbs,0
+Milwaukee Bucks,Giannis Antetokounmpo,3032977,https://a.espncdn.com/i/headshots/nba/players/full/3032977.png,F,34,31,"6' 11""",243 lbs,12
+Milwaukee Bucks,Thanasis Antetokounmpo,3102533,https://a.espncdn.com/i/headshots/nba/players/full/3102533.png,F,43,33,"6' 7""",219 lbs,6
+Milwaukee Bucks,Ousmane Dieng,4997526,https://a.espncdn.com/i/headshots/nba/players/full/4997526.png,F,21,23,"6' 9""",185 lbs,3
+Milwaukee Bucks,AJ Green,4397475,https://a.espncdn.com/i/headshots/nba/players/full/4397475.png,G,20,26,"6' 4""",190 lbs,3
+Milwaukee Bucks,Gary Harris,2999547,https://a.espncdn.com/i/headshots/nba/players/full/2999547.png,G,11,31,"6' 4""",210 lbs,11
+Milwaukee Bucks,Andre Jackson Jr.,4432190,https://a.espncdn.com/i/headshots/nba/players/full/4432190.png,G,44,24,"6' 6""",209 lbs,2
+Milwaukee Bucks,Kyle Kuzma,3134907,https://a.espncdn.com/i/headshots/nba/players/full/3134907.png,F,18,30,"6' 8""",221 lbs,8
+Milwaukee Bucks,Pete Nance,4397233,https://a.espncdn.com/i/headshots/nba/players/full/4397233.png,F,35,26,"6' 9""",225 lbs,2
+Milwaukee Bucks,Kevin Porter Jr.,4397140,https://a.espncdn.com/i/headshots/nba/players/full/4397140.png,G,7,26,"6' 5""",203 lbs,5
+Milwaukee Bucks,Bobby Portis,3064482,https://a.espncdn.com/i/headshots/nba/players/full/3064482.png,F,9,31,"6' 9""",250 lbs,10
+Milwaukee Bucks,Taurean Prince,2990962,https://a.espncdn.com/i/headshots/nba/players/full/2990962.png,F,12,32,"6' 6""",218 lbs,9
+Milwaukee Bucks,Ryan Rollins,4591725,https://a.espncdn.com/i/headshots/nba/players/full/4591725.png,G,13,23,"6' 3""",180 lbs,3
+Milwaukee Bucks,Cormac Ryan,4397114,https://a.espncdn.com/i/headshots/nba/players/full/4397114.png,G,30,27,"6' 5""",195 lbs,0
+Milwaukee Bucks,Jericho Sims,4277922,https://a.espncdn.com/i/headshots/nba/players/full/4277922.png,C,00,27,"6' 10""",250 lbs,4
+Milwaukee Bucks,Gary Trent Jr.,4277843,https://a.espncdn.com/i/headshots/nba/players/full/4277843.png,G,5,27,"6' 5""",204 lbs,7
+Milwaukee Bucks,Myles Turner,3133628,https://a.espncdn.com/i/headshots/nba/players/full/3133628.png,C,3,30,"6' 11""",250 lbs,10
+Minnesota Timberwolves,Kyle Anderson,2993874,https://a.espncdn.com/i/headshots/nba/players/full/2993874.png,F,12,32,"6' 8""",230 lbs,11
+Minnesota Timberwolves,Joan Beringer,5279133,https://a.espncdn.com/i/headshots/nba/players/full/5279133.png,F,19,19,"6' 11""",230 lbs,0
+Minnesota Timberwolves,Jaylen Clark,4432247,https://a.espncdn.com/i/headshots/nba/players/full/4432247.png,G,22,24,"6' 5""",205 lbs,1
+Minnesota Timberwolves,Mike Conley,3195,https://a.espncdn.com/i/headshots/nba/players/full/3195.png,G,10,38,"6' 1""",175 lbs,18
+Minnesota Timberwolves,Donte DiVincenzo,3934673,https://a.espncdn.com/i/headshots/nba/players/full/3934673.png,G,0,29,"6' 4""",203 lbs,7
+Minnesota Timberwolves,Ayo Dosunmu,4397002,https://a.espncdn.com/i/headshots/nba/players/full/4397002.png,G,13,26,"6' 4""",200 lbs,4
+Minnesota Timberwolves,Anthony Edwards,4594268,https://a.espncdn.com/i/headshots/nba/players/full/4594268.png,G,5,24,"6' 4""",225 lbs,5
+Minnesota Timberwolves,Enrique Freeman,4592699,https://a.espncdn.com/i/headshots/nba/players/full/4592699.png,F,25,25,"6' 9""",220 lbs,1
+Minnesota Timberwolves,Rudy Gobert,3032976,https://a.espncdn.com/i/headshots/nba/players/full/3032976.png,C,27,33,"7' 1""",258 lbs,12
+Minnesota Timberwolves,Bones Hyland,4592492,https://a.espncdn.com/i/headshots/nba/players/full/4592492.png,G,8,25,"6' 2""",169 lbs,4
+Minnesota Timberwolves,Joe Ingles,2968436,https://a.espncdn.com/i/headshots/nba/players/full/2968436.png,F,7,38,"6' 8""",220 lbs,11
+Minnesota Timberwolves,Jaden McDaniels,4431671,https://a.espncdn.com/i/headshots/nba/players/full/4431671.png,F,3,25,"6' 9""",185 lbs,5
+Minnesota Timberwolves,Julian Phillips,5105553,https://a.espncdn.com/i/headshots/nba/players/full/5105553.png,F,4,22,"6' 6""",198 lbs,2
+Minnesota Timberwolves,Zyon Pullin,4592979,https://a.espncdn.com/i/headshots/nba/players/full/4592979.png,G,15,25,"6' 4""",206 lbs,1
+Minnesota Timberwolves,Julius Randle,3064514,https://a.espncdn.com/i/headshots/nba/players/full/3064514.png,F,30,31,"6' 9""",250 lbs,11
+Minnesota Timberwolves,Naz Reid,4396971,https://a.espncdn.com/i/headshots/nba/players/full/4396971.png,C,11,26,"6' 9""",264 lbs,6
+Minnesota Timberwolves,Terrence Shannon Jr.,4432847,https://a.espncdn.com/i/headshots/nba/players/full/4432847.png,G,1,25,"6' 6""",215 lbs,1
+Minnesota Timberwolves,Rocco Zikarsky,5157587,https://a.espncdn.com/i/headshots/nba/players/full/5157587.png,C,44,19,"7' 3""",227 lbs,0
+New Orleans Pelicans,Trey Alexander,4433268,https://a.espncdn.com/i/headshots/nba/players/full/4433268.png,G,23,23,"6' 5""",185 lbs,1
+New Orleans Pelicans,Saddiq Bey,4397136,https://a.espncdn.com/i/headshots/nba/players/full/4397136.png,G,41,27,"6' 8""",215 lbs,5
+New Orleans Pelicans,Hunter Dickinson,4432180,https://a.espncdn.com/i/headshots/nba/players/full/4432180.png,C,4,25,"7' 1""",255 lbs,0
+New Orleans Pelicans,Jeremiah Fears,5144091,https://a.espncdn.com/i/headshots/nba/players/full/5144091.png,G,0,19,"6' 3""",190 lbs,0
+New Orleans Pelicans,Jordan Hawkins,4683750,https://a.espncdn.com/i/headshots/nba/players/full/4683750.png,G,24,24,"6' 5""",190 lbs,2
+New Orleans Pelicans,Herbert Jones,4277813,https://a.espncdn.com/i/headshots/nba/players/full/4277813.png,F,2,27,"6' 7""",206 lbs,4
+New Orleans Pelicans,DeAndre Jordan,3442,https://a.espncdn.com/i/headshots/nba/players/full/3442.png,C,6,37,"6' 11""",265 lbs,17
+New Orleans Pelicans,Kevon Looney,3155535,https://a.espncdn.com/i/headshots/nba/players/full/3155535.png,F,55,30,"6' 9""",222 lbs,10
+New Orleans Pelicans,Karlo Matkovic,4997538,https://a.espncdn.com/i/headshots/nba/players/full/4997538.png,F,17,25,"6' 10""",231 lbs,1
+New Orleans Pelicans,Bryce McGowens,4576086,https://a.espncdn.com/i/headshots/nba/players/full/4576086.png,G,11,23,"6' 6""",190 lbs,3
+New Orleans Pelicans,Yves Missi,5061589,https://a.espncdn.com/i/headshots/nba/players/full/5061589.png,C,21,22,"6' 11""",235 lbs,1
+New Orleans Pelicans,Trey Murphy III,4397688,https://a.espncdn.com/i/headshots/nba/players/full/4397688.png,F,25,25,"6' 8""",206 lbs,4
+New Orleans Pelicans,Dejounte Murray,3907497,https://a.espncdn.com/i/headshots/nba/players/full/3907497.png,G,5,29,"6' 4""",180 lbs,9
+New Orleans Pelicans,Josh Oduro,4432068,,C,13,25,"6' 9""",240 lbs,0
+New Orleans Pelicans,Micah Peavy,4432185,https://a.espncdn.com/i/headshots/nba/players/full/4432185.png,G,14,24,"6' 7""",220 lbs,0
+New Orleans Pelicans,Jordan Poole,4277956,https://a.espncdn.com/i/headshots/nba/players/full/4277956.png,G,3,26,"6' 4""",194 lbs,6
+New Orleans Pelicans,Derik Queen,4869780,https://a.espncdn.com/i/headshots/nba/players/full/4869780.png,C,22,21,"6' 9""",250 lbs,0
+New Orleans Pelicans,Zion Williamson,4395628,https://a.espncdn.com/i/headshots/nba/players/full/4395628.png,F,1,25,"6' 6""",284 lbs,6
+New York Knicks,Jose Alvarado,4277869,https://a.espncdn.com/i/headshots/nba/players/full/4277869.png,G,5,28,"6' 0""",179 lbs,4
+New York Knicks,OG Anunoby,3934719,https://a.espncdn.com/i/headshots/nba/players/full/3934719.png,F,8,28,"6' 7""",240 lbs,8
+New York Knicks,Mikal Bridges,3147657,https://a.espncdn.com/i/headshots/nba/players/full/3147657.png,G,25,29,"6' 6""",209 lbs,7
+New York Knicks,Jalen Brunson,3934672,https://a.espncdn.com/i/headshots/nba/players/full/3934672.png,G,11,29,"6' 2""",190 lbs,7
+New York Knicks,Jordan Clarkson,2528426,https://a.espncdn.com/i/headshots/nba/players/full/2528426.png,G,00,33,"6' 5""",194 lbs,11
+New York Knicks,Pacome Dadiet,5211983,https://a.espncdn.com/i/headshots/nba/players/full/5211983.png,F,4,20,"6' 9""",210 lbs,1
+New York Knicks,Mohamed Diawara,5289900,https://a.espncdn.com/i/headshots/nba/players/full/5289900.png,F,51,21,"6' 9""",225 lbs,0
+New York Knicks,Josh Hart,3062679,https://a.espncdn.com/i/headshots/nba/players/full/3062679.png,G,3,31,"6' 5""",215 lbs,8
+New York Knicks,Ariel Hukporti,4871141,https://a.espncdn.com/i/headshots/nba/players/full/4871141.png,C,55,24,"7' 0""",246 lbs,1
+New York Knicks,Trey Jemison III,4395623,https://a.espncdn.com/i/headshots/nba/players/full/4395623.png,F,50,26,"6' 10""",270 lbs,2
+New York Knicks,Dillon Jones,4702159,https://a.espncdn.com/i/headshots/nba/players/full/4702159.png,F,33,24,"6' 5""",235 lbs,1
+New York Knicks,Tyler Kolek,4433225,https://a.espncdn.com/i/headshots/nba/players/full/4433225.png,G,13,25,"6' 2""",195 lbs,1
+New York Knicks,Miles McBride,4431823,https://a.espncdn.com/i/headshots/nba/players/full/4431823.png,G,2,25,"6' 2""",195 lbs,4
+New York Knicks,Kevin McCullar Jr.,4411057,https://a.espncdn.com/i/headshots/nba/players/full/4411057.png,G,9,25,"6' 6""",210 lbs,1
+New York Knicks,Mitchell Robinson,4351852,https://a.espncdn.com/i/headshots/nba/players/full/4351852.png,C,23,28,"7' 0""",240 lbs,7
+New York Knicks,Landry Shamet,3914044,https://a.espncdn.com/i/headshots/nba/players/full/3914044.png,G,44,29,"6' 5""",190 lbs,7
+New York Knicks,Jeremy Sochan,4610139,https://a.espncdn.com/i/headshots/nba/players/full/4610139.png,F,20,23,"6' 8""",230 lbs,3
+New York Knicks,Karl-Anthony Towns,3136195,https://a.espncdn.com/i/headshots/nba/players/full/3136195.png,C,32,30,"7' 0""",248 lbs,10
+Oklahoma City Thunder,Brooks Barnhizer,4684208,https://a.espncdn.com/i/headshots/nba/players/full/4684208.png,F,23,24,"6' 6""",230 lbs,0
+Oklahoma City Thunder,Branden Carlson,4592435,https://a.espncdn.com/i/headshots/nba/players/full/4592435.png,C,15,26,"7' 0""",220 lbs,1
+Oklahoma City Thunder,Alex Caruso,2991350,https://a.espncdn.com/i/headshots/nba/players/full/2991350.png,G,9,32,"6' 5""",186 lbs,8
+Oklahoma City Thunder,Luguentz Dort,4397020,https://a.espncdn.com/i/headshots/nba/players/full/4397020.png,G,5,27,"6' 4""",220 lbs,6
+Oklahoma City Thunder,Shai Gilgeous-Alexander,4278073,https://a.espncdn.com/i/headshots/nba/players/full/4278073.png,G,2,27,"6' 6""",195 lbs,7
+Oklahoma City Thunder,Isaiah Hartenstein,4222252,https://a.espncdn.com/i/headshots/nba/players/full/4222252.png,C,55,28,"7' 0""",250 lbs,7
+Oklahoma City Thunder,Chet Holmgren,4433255,https://a.espncdn.com/i/headshots/nba/players/full/4433255.png,C,7,24,"7' 1""",208 lbs,2
+Oklahoma City Thunder,Isaiah Joe,4395702,https://a.espncdn.com/i/headshots/nba/players/full/4395702.png,G,11,26,"6' 4""",165 lbs,5
+Oklahoma City Thunder,Jared McCain,4683778,https://a.espncdn.com/i/headshots/nba/players/full/4683778.png,G,3,22,"6' 3""",195 lbs,1
+Oklahoma City Thunder,Ajay Mitchell,4900671,https://a.espncdn.com/i/headshots/nba/players/full/4900671.png,G,25,23,"6' 4""",190 lbs,1
+Oklahoma City Thunder,Payton Sandfort,4697270,,F,14,23,"6' 8""",215 lbs,0
+Oklahoma City Thunder,Thomas Sorber,5061603,https://a.espncdn.com/i/headshots/nba/players/full/5061603.png,C,12,20,"6' 9""",250 lbs,0
+Oklahoma City Thunder,Nikola Topic,5159925,https://a.espncdn.com/i/headshots/nba/players/full/5159925.png,G,44,20,"6' 6""",200 lbs,0
+Oklahoma City Thunder,Cason Wallace,4683692,https://a.espncdn.com/i/headshots/nba/players/full/4683692.png,G,22,22,"6' 3""",195 lbs,2
+Oklahoma City Thunder,Aaron Wiggins,4397183,https://a.espncdn.com/i/headshots/nba/players/full/4397183.png,G,21,27,"6' 5""",190 lbs,4
+Oklahoma City Thunder,Jalen Williams,4593803,https://a.espncdn.com/i/headshots/nba/players/full/4593803.png,G,8,25,"6' 5""",211 lbs,3
+Oklahoma City Thunder,Jaylin Williams,4432823,https://a.espncdn.com/i/headshots/nba/players/full/4432823.png,F,6,23,"6' 9""",240 lbs,3
+Oklahoma City Thunder,Kenrich Williams,3133626,https://a.espncdn.com/i/headshots/nba/players/full/3133626.png,G,34,31,"6' 7""",210 lbs,7
+Orlando Magic,Paolo Banchero,4432573,https://a.espncdn.com/i/headshots/nba/players/full/4432573.png,F,5,23,"6' 10""",250 lbs,3
+Orlando Magic,Desmond Bane,4066320,https://a.espncdn.com/i/headshots/nba/players/full/4066320.png,G,3,27,"6' 6""",215 lbs,5
+Orlando Magic,Goga Bitadze,4348700,https://a.espncdn.com/i/headshots/nba/players/full/4348700.png,C,35,26,"6' 11""",250 lbs,6
+Orlando Magic,Anthony Black,4712849,https://a.espncdn.com/i/headshots/nba/players/full/4712849.png,G,0,22,"6' 7""",200 lbs,2
+Orlando Magic,Jamal Cain,4278572,https://a.espncdn.com/i/headshots/nba/players/full/4278572.png,F,8,27,"6' 7""",191 lbs,3
+Orlando Magic,Jevon Carter,3133635,https://a.espncdn.com/i/headshots/nba/players/full/3133635.png,G,2,30,"6' 0""",200 lbs,7
+Orlando Magic,Wendell Carter Jr.,4277847,https://a.espncdn.com/i/headshots/nba/players/full/4277847.png,C,34,27,"6' 10""",270 lbs,7
+Orlando Magic,Colin Castleton,4397204,https://a.espncdn.com/i/headshots/nba/players/full/4397204.png,C,14,25,"6' 10""",250 lbs,2
+Orlando Magic,Tristan da Silva,4702382,https://a.espncdn.com/i/headshots/nba/players/full/4702382.png,F,23,25,"6' 8""",217 lbs,1
+Orlando Magic,Jett Howard,5105806,https://a.espncdn.com/i/headshots/nba/players/full/5105806.png,G,13,22,"6' 8""",215 lbs,2
+Orlando Magic,Jonathan Isaac,4065654,https://a.espncdn.com/i/headshots/nba/players/full/4065654.png,F,1,28,"6' 10""",230 lbs,8
+Orlando Magic,Alex Morales,4593034,https://a.espncdn.com/i/headshots/nba/players/full/4593034.png,G,30,28,"6' 6""",180 lbs,0
+Orlando Magic,Noah Penda,5214637,https://a.espncdn.com/i/headshots/nba/players/full/5214637.png,F,93,21,"6' 7""",215 lbs,0
+Orlando Magic,Jase Richardson,5239561,https://a.espncdn.com/i/headshots/nba/players/full/5239561.png,G,11,20,"6' 1""",180 lbs,0
+Orlando Magic,Jalen Suggs,4432165,https://a.espncdn.com/i/headshots/nba/players/full/4432165.png,G,4,24,"6' 5""",205 lbs,4
+Orlando Magic,Franz Wagner,4566434,https://a.espncdn.com/i/headshots/nba/players/full/4566434.png,F,22,24,"6' 10""",220 lbs,4
+Orlando Magic,Moritz Wagner,3150844,https://a.espncdn.com/i/headshots/nba/players/full/3150844.png,F,21,29,"6' 11""",245 lbs,7
+Philadelphia 76ers,Dominick Barlow,4870562,https://a.espncdn.com/i/headshots/nba/players/full/4870562.png,F,25,22,"6' 9""",215 lbs,3
+Philadelphia 76ers,MarJon Beauchamp,4432179,https://a.espncdn.com/i/headshots/nba/players/full/4432179.png,F,16,25,"6' 7""",199 lbs,3
+Philadelphia 76ers,Adem Bona,5105637,https://a.espncdn.com/i/headshots/nba/players/full/5105637.png,C,30,23,"6' 10""",235 lbs,1
+Philadelphia 76ers,Johni Broome,4433569,https://a.espncdn.com/i/headshots/nba/players/full/4433569.png,F,22,23,"6' 10""",235 lbs,0
+Philadelphia 76ers,Andre Drummond,6585,https://a.espncdn.com/i/headshots/nba/players/full/6585.png,C,1,32,"6' 11""",279 lbs,13
+Philadelphia 76ers,VJ Edgecombe,5124612,https://a.espncdn.com/i/headshots/nba/players/full/5124612.png,G,77,20,"6' 4""",180 lbs,0
+Philadelphia 76ers,Justin Edwards,4711297,https://a.espncdn.com/i/headshots/nba/players/full/4711297.png,F,11,22,"6' 7""",203 lbs,1
+Philadelphia 76ers,Joel Embiid,3059318,https://a.espncdn.com/i/headshots/nba/players/full/3059318.png,C,21,32,"7' 0""",280 lbs,9
+Philadelphia 76ers,Paul George,4251,https://a.espncdn.com/i/headshots/nba/players/full/4251.png,F,8,36,"6' 8""",220 lbs,15
+Philadelphia 76ers,Quentin Grimes,4397014,https://a.espncdn.com/i/headshots/nba/players/full/4397014.png,G,5,26,"6' 4""",210 lbs,4
+Philadelphia 76ers,Kyle Lowry,3012,https://a.espncdn.com/i/headshots/nba/players/full/3012.png,G,7,40,"6' 0""",196 lbs,19
+Philadelphia 76ers,Tyrese Martin,4397179,https://a.espncdn.com/i/headshots/nba/players/full/4397179.png,G,23,27,"6' 6""",215 lbs,2
+Philadelphia 76ers,Tyrese Maxey,4431678,https://a.espncdn.com/i/headshots/nba/players/full/4431678.png,G,0,25,"6' 2""",200 lbs,5
+Philadelphia 76ers,Kelly Oubre Jr.,3133603,https://a.espncdn.com/i/headshots/nba/players/full/3133603.png,G,9,30,"6' 8""",203 lbs,10
+Philadelphia 76ers,Dalen Terry,4433159,https://a.espncdn.com/i/headshots/nba/players/full/4433159.png,F,14,23,"6' 6""",195 lbs,3
+Philadelphia 76ers,Jabari Walker,4432446,https://a.espncdn.com/i/headshots/nba/players/full/4432446.png,F,33,23,"6' 7""",237 lbs,3
+Philadelphia 76ers,Trendon Watford,4431675,https://a.espncdn.com/i/headshots/nba/players/full/4431675.png,F,12,25,"6' 8""",237 lbs,4
+Phoenix Suns,Grayson Allen,3135045,https://a.espncdn.com/i/headshots/nba/players/full/3135045.png,G,8,30,"6' 3""",198 lbs,7
+Phoenix Suns,Devin Booker,3136193,https://a.espncdn.com/i/headshots/nba/players/full/3136193.png,G,1,29,"6' 5""",206 lbs,10
+Phoenix Suns,Jamaree Bouyea,4280245,https://a.espncdn.com/i/headshots/nba/players/full/4280245.png,G,17,26,"6' 2""",180 lbs,3
+Phoenix Suns,Koby Brea,4591259,https://a.espncdn.com/i/headshots/nba/players/full/4591259.png,G,14,23,"6' 5""",215 lbs,0
+Phoenix Suns,Dillon Brooks,3155526,https://a.espncdn.com/i/headshots/nba/players/full/3155526.png,F,3,30,"6' 7""",225 lbs,8
+Phoenix Suns,Amir Coffey,4066387,https://a.espncdn.com/i/headshots/nba/players/full/4066387.png,G,2,28,"6' 7""",210 lbs,6
+Phoenix Suns,Ryan Dunn,4888725,https://a.espncdn.com/i/headshots/nba/players/full/4888725.png,F,0,23,"6' 7""",216 lbs,1
+Phoenix Suns,Rasheer Fleming,5105977,https://a.espncdn.com/i/headshots/nba/players/full/5105977.png,F,20,21,"6' 9""",240 lbs,0
+Phoenix Suns,Collin Gillespie,4278585,https://a.espncdn.com/i/headshots/nba/players/full/4278585.png,G,12,26,"6' 1""",195 lbs,2
+Phoenix Suns,Jordan Goodwin,4278402,https://a.espncdn.com/i/headshots/nba/players/full/4278402.png,G,23,27,"6' 3""",215 lbs,4
+Phoenix Suns,Jalen Green,4437244,https://a.espncdn.com/i/headshots/nba/players/full/4437244.png,G,4,24,"6' 4""",186 lbs,4
+Phoenix Suns,Haywood Highsmith,4291678,https://a.espncdn.com/i/headshots/nba/players/full/4291678.png,F,7,29,"6' 5""",220 lbs,5
+Phoenix Suns,CJ Huntley,4702602,https://a.espncdn.com/i/headshots/nba/players/full/4702602.png,F,22,24,"6' 9""",190 lbs,0
+Phoenix Suns,Oso Ighodaro,4601023,https://a.espncdn.com/i/headshots/nba/players/full/4601023.png,F,11,23,"6' 11""",235 lbs,1
+Phoenix Suns,Isaiah Livers,4277957,https://a.espncdn.com/i/headshots/nba/players/full/4277957.png,F,18,27,"6' 6""",232 lbs,3
+Phoenix Suns,Khaman Maluach,5203685,https://a.espncdn.com/i/headshots/nba/players/full/5203685.png,C,10,19,"7' 1""",250 lbs,0
+Phoenix Suns,Royce O'Neale,2583632,https://a.espncdn.com/i/headshots/nba/players/full/2583632.png,F,00,32,"6' 6""",226 lbs,8
+Phoenix Suns,Mark Williams,4701232,https://a.espncdn.com/i/headshots/nba/players/full/4701232.png,C,15,24,"7' 1""",240 lbs,3
+Portland Trail Blazers,Deni Avdija,4683021,https://a.espncdn.com/i/headshots/nba/players/full/4683021.png,F,8,25,"6' 8""",228 lbs,5
+Portland Trail Blazers,Toumani Camara,4431736,https://a.espncdn.com/i/headshots/nba/players/full/4431736.png,F,33,26,"6' 7""",230 lbs,2
+Portland Trail Blazers,Sidy Cissoko,5081727,https://a.espncdn.com/i/headshots/nba/players/full/5081727.png,G,91,22,"6' 6""",220 lbs,2
+Portland Trail Blazers,Donovan Clingan,5105565,https://a.espncdn.com/i/headshots/nba/players/full/5105565.png,C,23,22,"7' 2""",280 lbs,1
+Portland Trail Blazers,Jerami Grant,2991070,https://a.espncdn.com/i/headshots/nba/players/full/2991070.png,F,9,32,"6' 7""",213 lbs,11
+Portland Trail Blazers,Yang Hansen,5217746,https://a.espncdn.com/i/headshots/nba/players/full/5217746.png,C,16,20,"7' 1""",270 lbs,0
+Portland Trail Blazers,Scoot Henderson,4683678,https://a.espncdn.com/i/headshots/nba/players/full/4683678.png,G,00,22,"6' 3""",207 lbs,2
+Portland Trail Blazers,Jrue Holiday,3995,https://a.espncdn.com/i/headshots/nba/players/full/3995.png,G,5,35,"6' 4""",220 lbs,16
+Portland Trail Blazers,Jayson Kent,4703889,,G,29,24,"6' 8""",215 lbs,0
+Portland Trail Blazers,Vit Krejci,4578893,https://a.espncdn.com/i/headshots/nba/players/full/4578893.png,G,27,25,"6' 8""",195 lbs,4
+Portland Trail Blazers,Damian Lillard,6606,https://a.espncdn.com/i/headshots/nba/players/full/6606.png,G,0,35,"6' 2""",200 lbs,13
+Portland Trail Blazers,Caleb Love,4433144,https://a.espncdn.com/i/headshots/nba/players/full/4433144.png,G,2,24,"6' 3""",212 lbs,0
+Portland Trail Blazers,Kris Murray,4594326,https://a.espncdn.com/i/headshots/nba/players/full/4594326.png,F,24,25,"6' 8""",218 lbs,2
+Portland Trail Blazers,Shaedon Sharpe,4914336,https://a.espncdn.com/i/headshots/nba/players/full/4914336.png,G,17,22,"6' 5""",210 lbs,3
+Portland Trail Blazers,Matisse Thybulle,3907498,https://a.espncdn.com/i/headshots/nba/players/full/3907498.png,G,4,29,"6' 5""",202 lbs,6
+Portland Trail Blazers,Blake Wesley,4683935,https://a.espncdn.com/i/headshots/nba/players/full/4683935.png,G,1,23,"6' 4""",190 lbs,3
+Portland Trail Blazers,Robert Williams III,4066211,https://a.espncdn.com/i/headshots/nba/players/full/4066211.png,C,35,28,"6' 9""",249 lbs,7
+Portland Trail Blazers,Chris Youngblood,4706557,https://a.espncdn.com/i/headshots/nba/players/full/4706557.png,G,11,24,"6' 4""",221 lbs,0
+Sacramento Kings,Precious Achiuwa,4431679,https://a.espncdn.com/i/headshots/nba/players/full/4431679.png,PF,9,26,"6' 8""",243 lbs,5
+Sacramento Kings,Patrick Baldwin Jr.,4433246,https://a.espncdn.com/i/headshots/nba/players/full/4433246.png,G,23,23,"6' 9""",220 lbs,3
+Sacramento Kings,Dylan Cardwell,4433174,https://a.espncdn.com/i/headshots/nba/players/full/4433174.png,C,32,24,"6' 10""",255 lbs,0
+Sacramento Kings,Devin Carter,4433188,https://a.espncdn.com/i/headshots/nba/players/full/4433188.png,G,22,24,"6' 2""",195 lbs,1
+Sacramento Kings,Nique Clifford,4702384,https://a.espncdn.com/i/headshots/nba/players/full/4702384.png,G,5,24,"6' 5""",175 lbs,0
+Sacramento Kings,DeMar DeRozan,3978,https://a.espncdn.com/i/headshots/nba/players/full/3978.png,G,10,36,"6' 6""",220 lbs,16
+Sacramento Kings,Drew Eubanks,3914285,https://a.espncdn.com/i/headshots/nba/players/full/3914285.png,F,19,29,"6' 10""",245 lbs,7
+Sacramento Kings,Killian Hayes,4683024,https://a.espncdn.com/i/headshots/nba/players/full/4683024.png,G,3,24,"6' 4""",195 lbs,5
+Sacramento Kings,De'Andre Hunter,4065732,https://a.espncdn.com/i/headshots/nba/players/full/4065732.png,F,15,28,"6' 7""",221 lbs,6
+Sacramento Kings,Zach LaVine,3064440,https://a.espncdn.com/i/headshots/nba/players/full/3064440.png,G,8,31,"6' 5""",200 lbs,11
+Sacramento Kings,Doug McDermott,2528588,https://a.espncdn.com/i/headshots/nba/players/full/2528588.png,F,7,34,"6' 7""",225 lbs,11
+Sacramento Kings,Malik Monk,4066262,https://a.espncdn.com/i/headshots/nba/players/full/4066262.png,G,0,28,"6' 3""",200 lbs,8
+Sacramento Kings,Keegan Murray,4594327,https://a.espncdn.com/i/headshots/nba/players/full/4594327.png,F,13,25,"6' 8""",225 lbs,3
+Sacramento Kings,Daeqwon Plowden,4279318,https://a.espncdn.com/i/headshots/nba/players/full/4279318.png,G,29,27,"6' 6""",216 lbs,1
+Sacramento Kings,Maxime Raynaud,4898371,https://a.espncdn.com/i/headshots/nba/players/full/4898371.png,C,42,23,"7' 1""",250 lbs,0
+Sacramento Kings,Domantas Sabonis,3155942,https://a.espncdn.com/i/headshots/nba/players/full/3155942.png,F,11,30,"6' 10""",240 lbs,9
+Sacramento Kings,Isaiah Stevens,4432117,https://a.espncdn.com/i/headshots/nba/players/full/4432117.png,G,24,25,"5' 11""",185 lbs,1
+Sacramento Kings,Russell Westbrook,3468,https://a.espncdn.com/i/headshots/nba/players/full/3468.png,G,18,37,"6' 4""",200 lbs,17
+San Antonio Spurs,Harrison Barnes,6578,https://a.espncdn.com/i/headshots/nba/players/full/6578.png,F,40,33,"6' 7""",225 lbs,13
+San Antonio Spurs,Bismack Biyombo,6427,https://a.espncdn.com/i/headshots/nba/players/full/6427.png,C,18,33,"6' 8""",255 lbs,14
+San Antonio Spurs,Carter Bryant,5061568,https://a.espncdn.com/i/headshots/nba/players/full/5061568.png,F,11,20,"6' 6""",220 lbs,0
+San Antonio Spurs,Stephon Castle,4845367,https://a.espncdn.com/i/headshots/nba/players/full/4845367.png,G,5,21,"6' 6""",215 lbs,1
+San Antonio Spurs,Julian Champagnie,4592479,https://a.espncdn.com/i/headshots/nba/players/full/4592479.png,F,30,24,"6' 7""",217 lbs,3
+San Antonio Spurs,De'Aaron Fox,4066259,https://a.espncdn.com/i/headshots/nba/players/full/4066259.png,G,4,28,"6' 3""",185 lbs,8
+San Antonio Spurs,Dylan Harper,5037871,https://a.espncdn.com/i/headshots/nba/players/full/5037871.png,G,2,20,"6' 5""",215 lbs,0
+San Antonio Spurs,Harrison Ingram,4433618,https://a.espncdn.com/i/headshots/nba/players/full/4433618.png,F,55,23,"6' 5""",230 lbs,1
+San Antonio Spurs,Keldon Johnson,4395723,https://a.espncdn.com/i/headshots/nba/players/full/4395723.png,F,3,26,"6' 5""",220 lbs,6
+San Antonio Spurs,David Jones Garcia,4713010,https://a.espncdn.com/i/headshots/nba/players/full/4713010.png,F,25,24,"6' 4""",210 lbs,0
+San Antonio Spurs,Luke Kornet,3064560,https://a.espncdn.com/i/headshots/nba/players/full/3064560.png,C,7,30,"7' 1""",250 lbs,8
+San Antonio Spurs,Jordan McLaughlin,3134916,https://a.espncdn.com/i/headshots/nba/players/full/3134916.png,G,0,30,"6' 0""",185 lbs,6
+San Antonio Spurs,Emanuel Miller,4432872,https://a.espncdn.com/i/headshots/nba/players/full/4432872.png,F,14,25,"6' 5""",215 lbs,1
+San Antonio Spurs,Kelly Olynyk,2489663,https://a.espncdn.com/i/headshots/nba/players/full/2489663.png,F,8,35,"7' 0""",240 lbs,12
+San Antonio Spurs,Mason Plumlee,2488653,https://a.espncdn.com/i/headshots/nba/players/full/2488653.png,C,45,36,"7' 0""",254 lbs,12
+San Antonio Spurs,Devin Vassell,4395630,https://a.espncdn.com/i/headshots/nba/players/full/4395630.png,G,24,25,"6' 5""",200 lbs,5
+San Antonio Spurs,Lindy Waters III,4066317,https://a.espncdn.com/i/headshots/nba/players/full/4066317.png,F,43,28,"6' 5""",210 lbs,4
+San Antonio Spurs,Victor Wembanyama,5104157,https://a.espncdn.com/i/headshots/nba/players/full/5104157.png,F,1,22,"7' 4""",235 lbs,2
+Toronto Raptors,Scottie Barnes,4433134,https://a.espncdn.com/i/headshots/nba/players/full/4433134.png,F,4,24,"6' 8""",237 lbs,4
+Toronto Raptors,RJ Barrett,4395625,https://a.espncdn.com/i/headshots/nba/players/full/4395625.png,F,9,25,"6' 6""",214 lbs,6
+Toronto Raptors,Jamison Battle,4431893,https://a.espncdn.com/i/headshots/nba/players/full/4431893.png,F,77,25,"6' 7""",220 lbs,1
+Toronto Raptors,Gradey Dick,5106258,https://a.espncdn.com/i/headshots/nba/players/full/5106258.png,G,1,22,"6' 7""",200 lbs,2
+Toronto Raptors,Chucky Hepburn,4590360,https://a.espncdn.com/i/headshots/nba/players/full/4590360.png,G,24,23,"6' 0""",190 lbs,0
+Toronto Raptors,Brandon Ingram,3913176,https://a.espncdn.com/i/headshots/nba/players/full/3913176.png,F,3,28,"6' 8""",190 lbs,9
+Toronto Raptors,Trayce Jackson-Davis,4431684,https://a.espncdn.com/i/headshots/nba/players/full/4431684.png,F,32,26,"6' 9""",245 lbs,2
+Toronto Raptors,A.J. Lawson,4067017,https://a.espncdn.com/i/headshots/nba/players/full/4067017.png,G,0,25,"6' 6""",179 lbs,3
+Toronto Raptors,Sandro Mamukelashvili,4278580,https://a.espncdn.com/i/headshots/nba/players/full/4278580.png,F,54,26,"6' 9""",240 lbs,4
+Toronto Raptors,Alijah Martin,4702656,https://a.espncdn.com/i/headshots/nba/players/full/4702656.png,G,55,24,"6' 2""",210 lbs,0
+Toronto Raptors,Jonathan Mogbo,5107897,https://a.espncdn.com/i/headshots/nba/players/full/5107897.png,F,2,24,"6' 9""",225 lbs,1
+Toronto Raptors,Collin Murray-Boyles,5093267,https://a.espncdn.com/i/headshots/nba/players/full/5093267.png,F,12,20,"6' 7""",245 lbs,0
+Toronto Raptors,Jakob Poeltl,3134908,https://a.espncdn.com/i/headshots/nba/players/full/3134908.png,C,19,30,"7' 0""",253 lbs,9
+Toronto Raptors,Immanuel Quickley,4395724,https://a.espncdn.com/i/headshots/nba/players/full/4395724.png,G,5,26,"6' 2""",190 lbs,5
+Toronto Raptors,Jamal Shead,4432241,https://a.espncdn.com/i/headshots/nba/players/full/4432241.png,G,23,23,"6' 1""",200 lbs,1
+Toronto Raptors,Garrett Temple,4023,https://a.espncdn.com/i/headshots/nba/players/full/4023.png,G,17,40,"6' 5""",195 lbs,15
+Toronto Raptors,Ja'Kobe Walter,4684272,https://a.espncdn.com/i/headshots/nba/players/full/4684272.png,G,14,21,"6' 4""",180 lbs,1
+Utah Jazz,Ace Bailey,4873138,https://a.espncdn.com/i/headshots/nba/players/full/4873138.png,G,19,19,"6' 9""",200 lbs,0
+Utah Jazz,Kennedy Chandler,4432646,https://a.espncdn.com/i/headshots/nba/players/full/4432646.png,G,0,23,"5' 11""",170 lbs,1
+Utah Jazz,Isaiah Collier,4683766,https://a.espncdn.com/i/headshots/nba/players/full/4683766.png,G,8,21,"6' 4""",210 lbs,1
+Utah Jazz,Kyle Filipowski,4684793,https://a.espncdn.com/i/headshots/nba/players/full/4684793.png,F,22,22,"6' 11""",250 lbs,1
+Utah Jazz,Keyonte George,4433627,https://a.espncdn.com/i/headshots/nba/players/full/4433627.png,G,3,22,"6' 4""",185 lbs,2
+Utah Jazz,Hayden Gray,5176420,,G,3,23,"6' 4""",190 lbs,0
+Utah Jazz,Elijah Harkless,4397449,https://a.espncdn.com/i/headshots/nba/players/full/4397449.png,G,16,26,"6' 3""",195 lbs,1
+Utah Jazz,Blake Hinson,4396963,https://a.espncdn.com/i/headshots/nba/players/full/4396963.png,F,2,26,"6' 8""",230 lbs,0
+Utah Jazz,Jaren Jackson Jr.,4277961,https://a.espncdn.com/i/headshots/nba/players/full/4277961.png,F,20,26,"6' 10""",242 lbs,7
+Utah Jazz,Walker Kessler,4433136,https://a.espncdn.com/i/headshots/nba/players/full/4433136.png,C,24,24,"7' 2""",245 lbs,3
+Utah Jazz,John Konchar,3134932,https://a.espncdn.com/i/headshots/nba/players/full/3134932.png,G,55,30,"6' 5""",210 lbs,6
+Utah Jazz,Kevin Love,3449,https://a.espncdn.com/i/headshots/nba/players/full/3449.png,F,42,37,"6' 10""",251 lbs,17
+Utah Jazz,Lauri Markkanen,4066336,https://a.espncdn.com/i/headshots/nba/players/full/4066336.png,F,23,28,"7' 1""",240 lbs,8
+Utah Jazz,Bez Mbeng,4898237,,G,21,24,"6' 4""",185 lbs,0
+Utah Jazz,Svi Mykhailiuk,3133602,https://a.espncdn.com/i/headshots/nba/players/full/3133602.png,G,10,28,"6' 7""",205 lbs,7
+Utah Jazz,Jusuf Nurkic,3102530,https://a.espncdn.com/i/headshots/nba/players/full/3102530.png,C,30,31,"6' 11""",290 lbs,11
+Utah Jazz,Brice Sensabaugh,5105839,https://a.espncdn.com/i/headshots/nba/players/full/5105839.png,F,28,22,"6' 6""",235 lbs,2
+Utah Jazz,Oscar Tshiebwe,4432827,https://a.espncdn.com/i/headshots/nba/players/full/4432827.png,C,34,26,"6' 8""",255 lbs,2
+Utah Jazz,Cody Williams,4895758,https://a.espncdn.com/i/headshots/nba/players/full/4895758.png,F,5,21,"6' 8""",190 lbs,1
+Washington Wizards,Leaky Black,4395650,https://a.espncdn.com/i/headshots/nba/players/full/4395650.png,F,12,26,"6' 6""",209 lbs,1
+Washington Wizards,Bub Carrington,4845374,https://a.espncdn.com/i/headshots/nba/players/full/4845374.png,G,7,20,"6' 4""",190 lbs,1
+Washington Wizards,Justin Champagnie,4432907,https://a.espncdn.com/i/headshots/nba/players/full/4432907.png,F,9,24,"6' 6""",206 lbs,4
+Washington Wizards,Sharife Cooper,4432173,https://a.espncdn.com/i/headshots/nba/players/full/4432173.png,G,13,24,"6' 0""",176 lbs,1
+Washington Wizards,Bilal Coulibaly,5104155,https://a.espncdn.com/i/headshots/nba/players/full/5104155.png,G,0,21,"6' 7""",195 lbs,2
+Washington Wizards,Anthony Davis,6583,https://a.espncdn.com/i/headshots/nba/players/full/6583.png,F,23,33,"6' 10""",253 lbs,13
+Washington Wizards,Kyshawn George,5174563,https://a.espncdn.com/i/headshots/nba/players/full/5174563.png,F,18,22,"6' 8""",200 lbs,1
+Washington Wizards,Anthony Gill,2581184,https://a.espncdn.com/i/headshots/nba/players/full/2581184.png,F,16,33,"6' 7""",230 lbs,5
+Washington Wizards,Jaden Hardy,4868423,https://a.espncdn.com/i/headshots/nba/players/full/4868423.png,G,8,23,"6' 3""",198 lbs,3
+Washington Wizards,Tre Johnson,5238230,https://a.espncdn.com/i/headshots/nba/players/full/5238230.png,G,12,20,"6' 5""",190 lbs,0
+Washington Wizards,Julian Reese,4683742,,F,15,22,"6' 9""",252 lbs,0
+Washington Wizards,Will Riley,5144126,https://a.espncdn.com/i/headshots/nba/players/full/5144126.png,G,27,20,"6' 9""",180 lbs,0
+Washington Wizards,D'Angelo Russell,3136776,https://a.espncdn.com/i/headshots/nba/players/full/3136776.png,G,5,30,"6' 3""",193 lbs,10
+Washington Wizards,Alex Sarr,5160992,https://a.espncdn.com/i/headshots/nba/players/full/5160992.png,C,20,21,"7' 0""",205 lbs,1
+Washington Wizards,Tristan Vukcevic,4997537,https://a.espncdn.com/i/headshots/nba/players/full/4997537.png,F,00,23,"7' 0""",220 lbs,2
+Washington Wizards,Jamir Watkins,4606840,https://a.espncdn.com/i/headshots/nba/players/full/4606840.png,G,5,24,"6' 6""",210 lbs,0
+Washington Wizards,Cam Whitmore,5105592,https://a.espncdn.com/i/headshots/nba/players/full/5105592.png,F,1,21,"6' 6""",230 lbs,2
+Washington Wizards,Trae Young,4277905,https://a.espncdn.com/i/headshots/nba/players/full/4277905.png,G,3,27,"6' 2""",164 lbs,7
