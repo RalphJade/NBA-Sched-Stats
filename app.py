@@ -7,54 +7,15 @@ import playerstats as ps
 import playerprop as pp
 import nba_prediction as pred  # NEW: Import prediction module
 import game_simulation as gsim  # NEW: Import game simulation module
-import data_manager as dm  # NEW: Import CSV-based data manager
 from datetime import datetime, timedelta
 import dateutil as tz
 import time
-import subprocess
+
+from app_helpers import get_available_team_names, get_player_context, load_player_stat_history
 
 
 st.set_page_config(page_title="NBA Stats & Schedule", page_icon="🏀", layout="wide")
 
-
-# ============================================================================
-# DATA STATUS SIDEBAR + REFRESH FUNCTIONALITY
-# ============================================================================
-
-with st.sidebar:
-    st.header("📊 Data Status")
-    
-    try:
-        info = dm.get_refresh_info()
-        
-        # Display data age
-        if info['fresh']:
-            st.success(f"✅ Data is fresh ({info['age_hours']:.1f}h old)")
-        else:
-            st.warning(f"⚠️ Data is stale ({info['age_hours']:.1f}h old)")
-        
-        st.caption(f"Last refresh: {info['last_refresh']}")
-        
-        # Refresh button
-        if st.button("🔄 Refresh Data Now", use_container_width=True, help="Fetch fresh data from ESPN and update CSVs"):
-            with st.spinner("🔄 Refreshing data... This may take 2-3 minutes..."):
-                try:
-                    result = subprocess.run(['python', 'data_refresh.py'], 
-                                          capture_output=True, text=True, timeout=300)
-                    if result.returncode == 0:
-                        st.success("✅ Data refresh complete!")
-                        st.rerun()
-                    else:
-                        st.error(f"❌ Refresh failed: {result.stderr}")
-                except Exception as e:
-                    st.error(f"❌ Error running refresh: {e}")
-        
-        st.divider()
-        
-    except FileNotFoundError:
-        st.error("📦 No data found!")
-        st.info("Run this command to fetch initial data:\n\n`python data_refresh.py`")
-        st.stop()
 
 # ============================================================================
 # MAIN APP
@@ -65,43 +26,22 @@ st.title("🏀 NBA Stats & Schedule Hub")
 tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["📅 Upcoming Games", "📊 Player Stats", "🎯 Player Props", "🤖 Player Prediction","Prediction History", "🎮 Game Simulation"])
 
 # ============================================================================
-# LOAD DATA FROM CSVs
+# LOAD DATA ONCE FOR ALL TABS
 # ============================================================================
-with st.spinner("Loading data from local storage..."):
-    all_team_ids_df = dm.get_all_teams()
-    all_rosters_df = dm.get_all_rosters()
-    
-    # Convert to dict format for backwards compatibility with existing code
-    # all_team_ids[team_name] -> {"id": id, "logo": logo, "display_name": name}
-    all_team_ids = {}
-    for _, row in all_team_ids_df.iterrows():
-        team_name = row['Display Name']
-        all_team_ids[team_name] = {
-            "id": str(row['ID']),
-            "logo": row.get('Logo', ''),
-            "display_name": team_name
-        }
-    
-    # Convert rosters to nested dict: all_players[team_name][player_name] -> {player_info}
-    all_players = {}
-    for team_name in all_rosters_df['Team'].unique():
-        team_roster = all_rosters_df[all_rosters_df['Team'] == team_name]
-        all_players[team_name] = {}
-        for _, player in team_roster.iterrows():
-            player_name = player['Player Name']
-            all_players[team_name][player_name] = {
-                "id": str(player.get('Player ID', '')),
-                "image": player.get('Image', ''),
-                "position": player.get('Position', 'N/A'),
-                "jersey": player.get('Jersey', 'N/A'),
-                "age": player.get('Age', 'N/A'),
-                "height": player.get('Height', 'N/A'),
-                "weight": player.get('Weight', 'N/A'),
-                "experience": player.get('Experience', 'N/A')
-            }
+with st.spinner("Loading NBA teams and rosters... This may take a moment."):
+    all_team_ids = ps.fetch_all_nba_teams()
+    all_players = ps.fetch_rosters_for_teams(all_team_ids)
 
-# Get upcoming teams
-upcoming_teams = set(all_team_ids.keys())
+# Centralized schedule fetching for all tabs
+upcoming_teams = set()
+upcoming_games_df = pd.DataFrame()
+try:
+    _, _, upcoming_games_df, _ = sched.fetch_upcoming_games_espn(days_ahead=14)
+    if not upcoming_games_df.empty:
+        upcoming_teams.update(upcoming_games_df['Home Team'].dropna().unique())
+        upcoming_teams.update(upcoming_games_df['Visitor Team'].dropna().unique())
+except Exception:
+    pass  # If schedule fetch fails, show all teams
 
 # ============================================================================
 # TAB 1: UPCOMING GAMES (NEXT 7 DAYS)
@@ -149,7 +89,7 @@ with tab2:
 
     with col1:
         st.subheader("Select Team")
-        teams_with_players = [t for t in sorted(all_players.keys()) if all_players[t] and (not upcoming_teams or t in upcoming_teams)]
+        teams_with_players = get_available_team_names(all_players, upcoming_teams)
         if not teams_with_players:
             st.error("No players loaded. ESPN API may be unavailable.")
             st.stop()
@@ -167,19 +107,22 @@ with tab2:
             selected_player = None
 
     if selected_player and roster:
-        player_info = roster[selected_player]
-        player_id = player_info["id"]
-        player_image = player_info["image"]
-        team_logo = all_team_ids[selected_team]["logo"]
-        team_id = all_team_ids[selected_team]["id"]
-        
-        # Extract new bio info
-        player_position = player_info.get("position", "N/A")
-        player_jersey = player_info.get("jersey", "N/A")
-        player_age = player_info.get("age", "N/A")
-        player_height = player_info.get("height", "N/A")
-        player_weight = player_info.get("weight", "N/A")
-        player_experience = player_info.get("experience", "N/A")
+        player_context = get_player_context(all_players, all_team_ids, selected_team, selected_player)
+        if not player_context:
+            st.warning(f"No player context available for {selected_player}.")
+            st.stop()
+
+        player_info = player_context["player_info"]
+        player_id = player_context["player_id"]
+        player_image = player_context["player_image"]
+        team_logo = player_context["team_logo"]
+        team_id = player_context["team_id"]
+        player_position = player_context["player_position"]
+        player_jersey = player_context["player_jersey"]
+        player_age = player_context["player_age"]
+        player_height = player_context["player_height"]
+        player_weight = player_context["player_weight"]
+        player_experience = player_context["player_experience"]
 
         col_p1, col_p2 = st.columns([1, 5])
         with col_p1:
@@ -193,39 +136,61 @@ with tab2:
             """)
 
         with st.spinner(f"Loading stats for {selected_player}..."):
-            # Load player stats from pre-fetched CSV data (no API calls needed!)
-            stats_df = dm.get_player_recent_stats(selected_player, selected_team)
-            
-            if stats_df.empty:
-                st.warning(f"⚠️ No stats found for {selected_player} in {selected_team}")
-                st.info("Data is pre-fetched daily. Check back after new games are completed.")
-            else:
-                st.caption(f"✅ Found {len(stats_df)} recent games")
+            player_stats = load_player_stat_history(ps, team_id, selected_player, selected_team)
 
-        if not stats_df.empty:
+            with st.expander("🔍 Game Fetching Debug Info"):
+                for debug_line in player_stats["game_fetch_debug"]:
+                    st.write(debug_line)
+
+            if len(player_stats["recent_game_ids"]) == 0:
+                st.warning(f"⚠️ No recent completed games found for {selected_team}")
+                st.info("This may happen if no games have been completed recently. Try again after a game finishes.")
+                stats = []
+            else:
+                st.caption(f"✅ Found {len(player_stats['recent_game_ids'])} recent completed games")
+
+                with st.expander("🔧 Debug Info - Player Search"):
+                    st.write("**Search Results:**")
+                    if player_stats["debug_log"]:
+                        for log_entry in player_stats["debug_log"]:
+                            st.write(f"{log_entry}")
+                    else:
+                        st.write("No search results recorded")
+
+                if not player_stats["boxscore_player_ids"]:
+                    st.warning(
+                        f"Could not find {selected_player} in any recent boxscores. "
+                        "They may not have played in the last completed games or the API data may be incomplete."
+                    )
+                    stats = []
+                else:
+                    st.caption(f"✅ Found player in boxscores with ID(s): {', '.join(player_stats['boxscore_player_ids'])}")
+
+                    with st.expander("ℹ️ Player ID Mapping"):
+                        st.write(f"**Roster API ID:** `{player_id}`")
+                        st.write(f"**Boxscore ID(s):** {', '.join([f'`{bid}`' for bid in player_stats['boxscore_player_ids']])}")
+                        if player_id != player_stats['boxscore_player_ids'][0]:
+                            st.info("✓ Successfully matched player by name and found correct boxscore ID")
+
+                    stats = player_stats["stats"]
+
+        if stats:
+            stats_df = pd.DataFrame(stats)
             st.dataframe(stats_df, hide_index=True, width='stretch')
 
             st.subheader("Summary (Last 10 Games)")
             numeric_df = stats_df.select_dtypes(include=['number'])
             summary_cols = st.columns(5)
-            
-            # Try common stat column names
-            pts_cols = [c for c in numeric_df.columns if 'pt' in c.lower() or 'point' in c.lower()]
-            reb_cols = [c for c in numeric_df.columns if 'reb' in c.lower()]
-            ast_cols = [c for c in numeric_df.columns if 'ast' in c.lower()]
-            stl_cols = [c for c in numeric_df.columns if 'stl' in c.lower()]
-            blk_cols = [c for c in numeric_df.columns if 'blk' in c.lower()]
-            
-            if pts_cols:
-                summary_cols[0].metric("Avg Points", f"{numeric_df[pts_cols[0]].mean():.1f}")
-            if reb_cols:
-                summary_cols[1].metric("Avg Rebounds", f"{numeric_df[reb_cols[0]].mean():.1f}")
-            if ast_cols:
-                summary_cols[2].metric("Avg Assists", f"{numeric_df[ast_cols[0]].mean():.1f}")
-            if stl_cols:
-                summary_cols[3].metric("Avg Steals", f"{numeric_df[stl_cols[0]].mean():.1f}")
-            if blk_cols:
-                summary_cols[4].metric("Avg Blocks", f"{numeric_df[blk_cols[0]].mean():.1f}")
+            if 'Points' in numeric_df.columns:
+                summary_cols[0].metric("Avg Points", f"{numeric_df['Points'].mean():.1f}")
+            if 'Rebounds' in numeric_df.columns:
+                summary_cols[1].metric("Avg Rebounds", f"{numeric_df['Rebounds'].mean():.1f}")
+            if 'Assists' in numeric_df.columns:
+                summary_cols[2].metric("Avg Assists", f"{numeric_df['Assists'].mean():.1f}")
+            if 'Steals' in numeric_df.columns:
+                summary_cols[3].metric("Avg Steals", f"{numeric_df['Steals'].mean():.1f}")
+            if 'Blocks' in numeric_df.columns:
+                summary_cols[4].metric("Avg Blocks", f"{numeric_df['Blocks'].mean():.1f}")
 
 # ============================================================================
 # TAB 3: PLAYER PROPS — WITH ML RECOMMENDATIONS
@@ -240,7 +205,7 @@ with tab3:
 
     with col1:
         st.subheader("Select Team")
-        teams_with_players = [t for t in sorted(all_players.keys()) if all_players[t] and (not upcoming_teams or t in upcoming_teams)]
+        teams_with_players = get_available_team_names(all_players, upcoming_teams)
         selected_team_props = st.selectbox("Choose a team:", teams_with_players, key="team_select_props")
 
     with col2:
@@ -255,19 +220,22 @@ with tab3:
             selected_player_props = None
 
     if selected_player_props and roster_props:
-        player_info_props = roster_props[selected_player_props]
-        player_id_props = player_info_props["id"]
-        player_image_props = player_info_props["image"]
-        team_logo_props = all_team_ids[selected_team_props]["logo"]
-        team_id_props = all_team_ids[selected_team_props]["id"]
-        
-        # Extract new bio info
-        player_position_props = player_info_props.get("position", "N/A")
-        player_jersey_props = player_info_props.get("jersey", "N/A")
-        player_age_props = player_info_props.get("age", "N/A")
-        player_height_props = player_info_props.get("height", "N/A")
-        player_weight_props = player_info_props.get("weight", "N/A")
-        player_experience_props = player_info_props.get("experience", "N/A")
+        player_context_props = get_player_context(all_players, all_team_ids, selected_team_props, selected_player_props)
+        if not player_context_props:
+            st.warning(f"No player context available for {selected_player_props}.")
+            st.stop()
+
+        player_info_props = player_context_props["player_info"]
+        player_id_props = player_context_props["player_id"]
+        player_image_props = player_context_props["player_image"]
+        team_logo_props = player_context_props["team_logo"]
+        team_id_props = player_context_props["team_id"]
+        player_position_props = player_context_props["player_position"]
+        player_jersey_props = player_context_props["player_jersey"]
+        player_age_props = player_context_props["player_age"]
+        player_height_props = player_context_props["player_height"]
+        player_weight_props = player_context_props["player_weight"]
+        player_experience_props = player_context_props["player_experience"]
 
         # Get tomorrow's opponent
         tomorrow_opponent = None
@@ -286,16 +254,13 @@ with tab3:
             pass
 
         with st.spinner(f"Loading data for {selected_player_props}..."):
-            # Load player stats from pre-fetched CSV data (no API calls!)
-            stats_df = dm.get_player_recent_stats(selected_player_props, selected_team_props)
-            
-            if stats_df.empty:
-                st.warning(f"⚠️ No stats found for {selected_player_props}")
-            else:
-                # Ensure Date column is datetime
-                if 'Date' in stats_df.columns:
-                    stats_df['Date'] = pd.to_datetime(stats_df['Date'], errors='coerce')
-                    stats_df = stats_df.sort_values('Date', ascending=False)
+            player_stats_props = load_player_stat_history(ps, team_id_props, selected_player_props, selected_team_props)
+            stats = player_stats_props["stats"]
+
+            if stats:
+                stats_df = pd.DataFrame(stats)
+                stats_df['Date'] = pd.to_datetime(stats_df.get('Date', pd.Series()), errors='coerce')
+                stats_df = stats_df.sort_values('Date', ascending=False)
 
                 # Display Player Header
                 prop_head1, prop_head2 = st.columns([1, 5])
@@ -461,7 +426,8 @@ with tab3:
                         f"ℹ️ ML analysis unable to generate confident recommendations. "
                         f"Ensure player has sufficient recent game data."
                     )
-
+            else:
+                st.warning(f"Could not load stats for {selected_player_props}.")
 
 # ============================================================================
 # TAB 4: PLAYER PREDICTION (NEW)
@@ -497,8 +463,7 @@ with tab4:
 
     with col1:
         st.subheader("Select Team")
-        # Only show teams that have upcoming games scheduled
-        teams_with_players = [t for t in sorted(all_players.keys()) if all_players[t] and (not upcoming_teams or t in upcoming_teams)]
+        teams_with_players = get_available_team_names(all_players, upcoming_teams)
         if not teams_with_players:
             teams_with_players = sorted(all_players.keys())
             
@@ -516,19 +481,22 @@ with tab4:
             selected_player_pred = None
 
     if selected_player_pred and roster_pred:
-        player_info_pred = roster_pred[selected_player_pred]
-        player_id_pred = player_info_pred["id"]
-        player_image_pred = player_info_pred["image"]
-        team_logo_pred = all_team_ids[selected_team_pred]["logo"]
-        team_id_pred = all_team_ids[selected_team_pred]["id"]
-        
-        # Extract new bio info
-        player_position_pred = player_info_pred.get("position", "N/A")
-        player_jersey_pred = player_info_pred.get("jersey", "N/A")
-        player_age_pred = player_info_pred.get("age", "N/A")
-        player_height_pred = player_info_pred.get("height", "N/A")
-        player_weight_pred = player_info_pred.get("weight", "N/A")
-        player_experience_pred = player_info_pred.get("experience", "N/A")
+        player_context_pred = get_player_context(all_players, all_team_ids, selected_team_pred, selected_player_pred)
+        if not player_context_pred:
+            st.warning(f"No player context available for {selected_player_pred}.")
+            st.stop()
+
+        player_info_pred = player_context_pred["player_info"]
+        player_id_pred = player_context_pred["player_id"]
+        player_image_pred = player_context_pred["player_image"]
+        team_logo_pred = player_context_pred["team_logo"]
+        team_id_pred = player_context_pred["team_id"]
+        player_position_pred = player_context_pred["player_position"]
+        player_jersey_pred = player_context_pred["player_jersey"]
+        player_age_pred = player_context_pred["player_age"]
+        player_height_pred = player_context_pred["player_height"]
+        player_weight_pred = player_context_pred["player_weight"]
+        player_experience_pred = player_context_pred["player_experience"]
 
         # Ensure upcoming_games_df is available for opponent lookup
         if 'upcoming_games_df' not in locals() or upcoming_games_df.empty:
@@ -547,89 +515,95 @@ with tab4:
 
         # Load stats
         with st.spinner(f"Loading prediction data for {selected_player_pred}..."):
-            # Load player stats from pre-fetched CSV data (no API calls!)
-            stats_df = dm.get_player_recent_stats(selected_player_pred, selected_team_pred)
-            
-            if stats_df.empty:
-                st.warning(f"⚠️ No stats found for {selected_player_pred}")
-            else:
-                stats = stats_df.to_dict('records')
-                
-                if stats and len(stats) >= 3:
-                    # Convert to standardized columns
-                    stats_df = pd.DataFrame(stats)
-                    
-                    # STEP 1: Clean data - handle string formats like '10-22'
-                    for col in stats_df.columns:
-                        if col not in ['Date', 'OPP', 'Opponent']:
-                            stats_df[col] = stats_df[col].astype(str).apply(
-                                lambda x: x.split('-')[0].strip() if '-' in str(x) else x
-                            )
-                    
-                    # STEP 2: Rename columns to match prediction model expectations
-                    column_mapping = {
-                        'Points': 'PTS',
-                        'Rebounds': 'REB',
-                        'Assists': 'AST',
-                        '3PM': '3PM',
-                        'Field Goals Made': 'FGM',
-                        'Field Goals Attempted': 'FGA',
-                        'Free Throws Made': 'FTM',
-                        'Free Throws Attempted': 'FTA',
-                        '3 Point Attempts': '3PA',
-                        'Minutes': 'MIN',
-                        'Turnovers': 'TO',
-                        'Steals': 'STL',
-                        'Opponent': 'OPP'
-                    }
-                    
-                    for old_col, new_col in column_mapping.items():
-                        if old_col in stats_df.columns and new_col not in stats_df.columns:
-                            stats_df[new_col] = stats_df[old_col]
-                    
-                    # STEP 3: Convert to numeric
-                    numeric_cols = ['PTS', 'AST', 'REB', '3PM', 'FGM', 'FGA', 'FTM', 'FTA', '3PA', 'MIN', 'TO', 'STL']
-                    for col in numeric_cols:
-                        if col in stats_df.columns:
-                            stats_df[col] = pd.to_numeric(stats_df[col], errors='coerce')
-                    
-                    # Note: Opponent defensive metrics are now pre-calculated in data_refresh.py
-                    # Using simplified prediction without live opponent analysis (can be enhanced later)
-                    opp_def_stats = {}
+            player_stats_pred = load_player_stat_history(ps, team_id_pred, selected_player_pred, selected_team_pred)
+            stats = player_stats_pred["stats"]
 
-                    # Engineer features (simplified version without live opponent fetching)
-                    stats_df_engineered = pred.engineer_features(stats_df, name=selected_player_pred, opp_def_stats=opp_def_stats)
-                    
-                    if stats_df_engineered is not None and not stats_df_engineered.empty:
-                        # Display Player Header
-                        pred_head1, pred_head2 = st.columns([1, 5])
-                        with pred_head1:
-                            if player_image_pred: st.image(player_image_pred, width=120)
-                        with pred_head2:
-                            st.subheader(f"{selected_player_pred}")
-                            st.image(team_logo_pred, width=60)
-                        
-                        # Display recent stats
-                        st.subheader(f"📊 Recent Game History")
-                        
-                        display_cols = ['Date', 'OPP', 'PTS', 'REB', 'AST', '3PM', 'MIN']
-                        available_cols = [col for col in display_cols if col in stats_df_engineered.columns]
-                        
-                        # Show last 10 games
-                        st.dataframe(
-                            stats_df_engineered[available_cols].head(10),
-                            hide_index=True,
-                            width='stretch'
-                        )
-                        
-                        # Build and display predictions
-                    st.subheader(f"🎯 Prediction vs {next_opponent if next_opponent else 'Unknown'}")
+        if stats and len(stats) >= 3:
+            # Convert to standardized columns
+            stats_df = pd.DataFrame(stats)
+            
+            # STEP 1: Clean data - handle string formats like '10-22'
+            for col in stats_df.columns:
+                if col not in ['Date', 'OPP', 'Opponent']:
+                    stats_df[col] = stats_df[col].astype(str).apply(
+                        lambda x: x.split('-')[0].strip() if '-' in str(x) else x
+                    )
+            
+            # STEP 2: Rename columns to match prediction model expectations
+            column_mapping = {
+                'Points': 'PTS',
+                'Rebounds': 'REB',
+                'Assists': 'AST',
+                '3PM': '3PM',
+                'Field Goals Made': 'FGM',
+                'Field Goals Attempted': 'FGA',
+                'Free Throws Made': 'FTM',
+                'Free Throws Attempted': 'FTA',
+                '3 Point Attempts': '3PA',
+                'Minutes': 'MIN',
+                'Turnovers': 'TO',
+                'Steals': 'STL',
+                'Opponent': 'OPP'
+            }
+            
+            for old_col, new_col in column_mapping.items():
+                if old_col in stats_df.columns and new_col not in stats_df.columns:
+                    stats_df[new_col] = stats_df[old_col]
+            
+            # STEP 3: Convert to numeric
+            numeric_cols = ['PTS', 'AST', 'REB', '3PM', 'FGM', 'FGA', 'FTM', 'FTA', '3PA', 'MIN', 'TO', 'STL']
+            for col in numeric_cols:
+                if col in stats_df.columns:
+                    stats_df[col] = pd.to_numeric(stats_df[col], errors='coerce')
+            
+            # Fetch Opponent Defensive Metrics for ML Context
+            opp_def_stats = {}
+            with st.spinner("Analyzing opponent defensive profiles..."):
+                hist_opponents = set(stats_df['OPP'].dropna().unique())
+                if next_opponent:
+                    hist_opponents.add(next_opponent)
                 
-                    predictions_data = []
-                    models_built = {}
+                # Fetch defensive profile for the next opponent and historical ones
+                for opp_name in list(hist_opponents)[:8]: # Limit to save API time
+                    opp_data = all_team_ids.get(opp_name)
+                    if opp_data:
+                        opp_tid = opp_data["id"]
+                        opp_g_ids, _ = ps.fetch_recent_games_for_team(opp_tid, max_games=5)
+                        opp_def_stats[opp_name] = pred.calculate_team_defensive_profile(opp_tid, opp_g_ids)
+
+            # Engineer features with defensive stats
+            stats_df_engineered = pred.engineer_features(stats_df, name=selected_player_pred, opp_def_stats=opp_def_stats)
+            
+            if stats_df_engineered is not None and not stats_df_engineered.empty:
+                # Display Player Header
+                pred_head1, pred_head2 = st.columns([1, 5])
+                with pred_head1:
+                    if player_image_pred: st.image(player_image_pred, width=120)
+                with pred_head2:
+                    st.subheader(f"{selected_player_pred}")
+                    st.image(team_logo_pred, width=60)
                 
-                    for stat in ['PTS', 'AST', 'REB', '3PM']:
-                        model, mae, r2, preds = pred.build_prediction_models(stats_df_engineered, stat=stat)
+                # Display recent stats
+                st.subheader(f"📊 Recent Game History")
+                
+                display_cols = ['Date', 'OPP', 'PTS', 'REB', 'AST', '3PM', 'MIN']
+                available_cols = [col for col in display_cols if col in stats_df_engineered.columns]
+                
+                # Show last 10 games
+                st.dataframe(
+                    stats_df_engineered[available_cols].head(10),
+                    hide_index=True,
+                    width='stretch'
+                )
+                
+                # Build and display predictions
+                st.subheader(f"🎯 Prediction vs {next_opponent if next_opponent else 'Unknown'}")
+                
+                predictions_data = []
+                models_built = {}
+                
+                for stat in ['PTS', 'AST', 'REB', '3PM']:
+                    model, mae, r2, preds = pred.build_prediction_models(stats_df_engineered, stat=stat)
                     
                     if model is not None:
                         models_built[stat] = (model, mae, r2)
@@ -658,8 +632,8 @@ with tab4:
                                 'R² Score': f"{r2:.2f}"
                             })
                 
-                    if predictions_data:
-                        pred_df = pd.DataFrame(predictions_data)
+                if predictions_data:
+                    pred_df = pd.DataFrame(predictions_data)
                     
                     # Display in columns
                     cols = st.columns(4)
@@ -836,7 +810,7 @@ with tab4:
                 else:
                     st.warning("Could not build prediction models. Try a different player with more recent game data.")
             else:
-                    st.warning("Could not engineer features from player stats.")
+                st.warning("Could not engineer features from player stats.")
         else:
             st.warning(
                 f"Not enough data for {selected_player_pred}. "
@@ -954,36 +928,20 @@ with tab6:
     if st.session_state.get('simulation_running', False):
         st.write("---")
         
-        # Prepare player stats by loading from pre-fetched data
+        # Prepare player stats
         home_roster_for_sim = {}
         away_roster_for_sim = {}
         
-        with st.spinner("Loading player statistics for both teams..."):
-            # Fetch home team stats from CSV
-            home_stats_all = dm.get_player_stats(team_name=home_team_sim)
-            if not home_stats_all.empty:
-                for player_name in list(home_roster_sim.keys())[:12]:  # Top 12 players
-                    try:
-                        player_stats = home_stats_all[home_stats_all['Player Name'].str.contains(player_name, case=False, na=False)]
-                        if not player_stats.empty:
-                            home_roster_for_sim[player_name] = player_stats
-                    except:
-                        pass
-            
-            # Fetch away team stats from CSV
-            away_stats_all = dm.get_player_stats(team_name=away_team_sim)
-            if not away_stats_all.empty:
-                for player_name in list(away_roster_sim.keys())[:12]:  # Top 12 players
-                    try:
-                        player_stats = away_stats_all[away_stats_all['Player Name'].str.contains(player_name, case=False, na=False)]
-                        if not player_stats.empty:
-                            away_roster_for_sim[player_name] = player_stats
-                    except:
-                        pass
+        for player_name, stats in home_roster_sim.items():
+            if isinstance(stats, pd.DataFrame) and not stats.empty:
+                home_roster_for_sim[player_name] = stats
+        
+        for player_name, stats in away_roster_sim.items():
+            if isinstance(stats, pd.DataFrame) and not stats.empty:
+                away_roster_for_sim[player_name] = stats
         
         if home_roster_for_sim and away_roster_for_sim:
             # Create simulator
-            import time
             simulator = gsim.NBAGameSimulator(
                 home_team_sim,
                 away_team_sim,
@@ -991,61 +949,57 @@ with tab6:
                 away_roster_for_sim
             )
             
-            # Simulate full game
-            simulator.simulate_game()
+            # Use placeholders for live updates
+            score_placeholder = st.empty()
+            play_placeholder = st.empty()
             
-            # ========== LIVE BROADCAST UI ==========
-            
-            # Score updates per quarter
+            # Simulate game
             for q in range(1, 5):
-                st.write("---")
+                simulator.quarter = q
+                simulator.time = 12.0
                 
-                # Scoreboard
-                col1, col2, col3 = st.columns([2, 1, 2])
-                with col1:
-                    st.markdown(f"# {home_team_sim}")
-                with col2:
-                    st.markdown(f"### Q{q}")
-                with col3:
-                    st.markdown(f"# {away_team_sim}", unsafe_allow_html=False)
+                with score_placeholder.container():
+                    col1, col2, col3 = st.columns([2, 1, 2])
+                    with col1:
+                        st.markdown(f"### {home_team_sim}")
+                    with col2:
+                        st.markdown(f"## Q{q}")
+                    with col3:
+                        st.markdown(f"### {away_team_sim}")
+                    
+                    col1, col2, col3 = st.columns([2, 1, 2])
+                    with col1:
+                        st.markdown(f"# {simulator.home_score}", unsafe_allow_html=True)
+                    with col2:
+                        pass
+                    with col3:
+                        st.markdown(f"# {simulator.away_score}", unsafe_allow_html=True)
                 
-                col1, col2, col3 = st.columns([2, 1, 2])
-                with col1:
-                    st.markdown(f"## {simulator.home_score}")
-                with col2:
-                    st.markdown("")
-                with col3:
-                    st.markdown(f"## {simulator.away_score}")
+                # Simulate quarter
+                simulator.simulate_quarter()
                 
-                # Play-by-play for quarter
-                st.subheader(f"📹 Q{q} Play-by-Play ({simulator.possession_count} possessions)")
-                quarter_plays = [p for p in simulator.play_log if p['quarter'] == q]
-                
-                play_cols = st.columns([0.5, 1, 6, 1.5])
-                play_cols[0].write("**Q**")
-                play_cols[1].write("**Time**")
-                play_cols[2].write("**Play**")
-                play_cols[3].write("**Score**")
-                
-                for play in quarter_plays:
-                    if play['time'] == 'END':
-                        st.success(f"**{play['description']}**")
-                    else:
-                        # Color coding
-                        if play['color'] == 'green':
-                            st.success(f"✅ {play['description']}")
-                        elif play['color'] == 'red':
-                            st.error(f"❌ {play['description']}")
-                        elif play['color'] == 'yellow':
-                            st.warning(f"⚠️ {play['description']}")
-                        elif play['color'] == 'purple':
-                            st.info(f"🔐 {play['description']}")
-                        elif play['color'] == 'blue':
-                            st.info(f"🏀 {play['description']}")
+                # Display plays from this quarter
+                with play_placeholder.container():
+                    st.subheader(f"📹 Q{q} Play-by-Play")
+                    
+                    quarter_plays = [p for p in simulator.play_log if p['quarter'] == q]
+                    
+                    for play in quarter_plays:
+                        if play['description'].startswith('END OF'):
+                            st.success(f"### {play['description']}")
+                        elif '💔' in play['description']:
+                            st.warning(play['description'])
+                        elif '🔥' in play['description'] or '🎯' in play['description']:
+                            st.success(f"✨ {play['description']}")
                         else:
                             st.write(play['description'])
+                        
+                        time.sleep(delay)
+                
+                if q < 4:
+                    st.write("---")
             
-            # ========== FINAL SCORE ==========
+            # Final score
             st.write("---")
             st.markdown("# 🏁 FINAL SCORE")
             
@@ -1059,100 +1013,70 @@ with tab6:
             
             col1, col2, col3 = st.columns([2, 1, 2])
             with col1:
-                st.markdown(f"# {simulator.home_score}")
+                st.markdown(f"# {simulator.home_score}", unsafe_allow_html=True)
             with col2:
-                if simulator.home_score > simulator.away_score:
-                    st.markdown(f"# 🏆")
-                else:
-                    st.markdown(f"# 🏆")
+                winner = "🏆" if simulator.home_score > simulator.away_score else "⚔️"
+                st.markdown(f"# {winner}")
             with col3:
-                st.markdown(f"# {simulator.away_score}")
+                st.markdown(f"# {simulator.away_score}", unsafe_allow_html=True)
             
-            # ========== BOX SCORES (ONLY PLAYERS WHO PLAYED) ==========
+            # Display box scores
             st.write("---")
-            st.subheader("📊 Box Scores (Players Who Played)")
+            st.subheader("📊 Box Scores")
             
             tab_home, tab_away = st.tabs([f"🏠 {home_team_sim}", f"✈️ {away_team_sim}"])
             
             with tab_home:
                 home_box = simulator.get_home_team_stats()
-                if not home_box.empty:
-                    # Format for display
-                    display_cols = ['Player', 'PTS', 'REB', 'AST', '3PM', 'STL', 'BLK', 'TO', 'MIN', 'FGM', 'FGA', 'FTM', 'FTA']
-                    display_cols = [c for c in display_cols if c in home_box.columns]
-                    
-                    st.dataframe(
-                        home_box[display_cols].style.format(
-                            {col: '{:.1f}' if col == 'MIN' else '{:.0f}' for col in display_cols if col != 'Player'}
-                        ),
-                        hide_index=True,
-                        use_container_width=True
-                    )
-                else:
-                    st.info("No players in box score")
+                st.dataframe(
+                    home_box.style.format({col: '{:.0f}' for col in home_box.columns if col != 'Player'}),
+                    hide_index=True,
+                    use_container_width=True
+                )
             
             with tab_away:
                 away_box = simulator.get_away_team_stats()
-                if not away_box.empty:
-                    # Format for display
-                    display_cols = ['Player', 'PTS', 'REB', 'AST', '3PM', 'STL', 'BLK', 'TO', 'MIN', 'FGM', 'FGA', 'FTM', 'FTA']
-                    display_cols = [c for c in display_cols if c in away_box.columns]
-                    
-                    st.dataframe(
-                        away_box[display_cols].style.format(
-                            {col: '{:.1f}' if col == 'MIN' else '{:.0f}' for col in display_cols if col != 'Player'}
-                        ),
-                        hide_index=True,
-                        use_container_width=True
-                    )
-                else:
-                    st.info("No players in box score")
+                st.dataframe(
+                    away_box.style.format({col: '{:.0f}' for col in away_box.columns if col != 'Player'}),
+                    hide_index=True,
+                    use_container_width=True
+                )
             
-            # ========== GAME STATISTICS ==========
+            # Game stats
             st.write("---")
             st.subheader("📈 Game Statistics")
             
             col1, col2 = st.columns(2)
             
             with col1:
-                st.markdown(f"### {home_team_sim}")
-                home_fgm = sum([p['FGM'] for p in simulator.box_score['home'].values()])
-                home_fga = sum([p['FGA'] for p in simulator.box_score['home'].values()])
-                home_ftm = sum([p['FTM'] for p in simulator.box_score['home'].values()])
-                home_fta = sum([p['FTA'] for p in simulator.box_score['home'].values()])
-                home_reb = sum([p['REB'] for p in simulator.box_score['home'].values()])
-                home_ast = sum([p['AST'] for p in simulator.box_score['home'].values()])
-                home_to = sum([p['TO'] for p in simulator.box_score['home'].values()])
-                home_3pm = sum([p['3PM'] for p in simulator.box_score['home'].values()])
+                st.markdown(f"### {home_team_sim} Stats")
+                home_stats = {
+                    'Final Score': simulator.home_score,
+                    'FG%': f"{(sum([p['PTS'] for p in simulator.box_score['home'].values()]) / max(sum([p['PTS'] for p in simulator.box_score['home'].values()]) * 2, 1) * 100):.1f}%",
+                    'Total Rebounds': sum([p['REB'] for p in simulator.box_score['home'].values()]),
+                    'Total Assists': sum([p['AST'] for p in simulator.box_score['home'].values()]),
+                    '3-Pointers Made': sum([p['3PM'] for p in simulator.box_score['home'].values()]),
+                    'Turnovers': sum([p['TO'] for p in simulator.box_score['home'].values()]),
+                }
                 
-                c1, c2 = st.columns(2)
-                c1.metric("FG", f"{home_fgm}-{home_fga}")
-                c2.metric("FT", f"{home_ftm}-{home_fta}")
-                c1.metric("3-Pointers", f"{home_3pm}")
-                c2.metric("Rebounds", f"{home_reb}")
-                c1.metric("Assists", f"{home_ast}")
-                c2.metric("Turnovers", f"{home_to}")
+                for key, value in home_stats.items():
+                    st.metric(key, value)
             
             with col2:
-                st.markdown(f"### {away_team_sim}")
-                away_fgm = sum([p['FGM'] for p in simulator.box_score['away'].values()])
-                away_fga = sum([p['FGA'] for p in simulator.box_score['away'].values()])
-                away_ftm = sum([p['FTM'] for p in simulator.box_score['away'].values()])
-                away_fta = sum([p['FTA'] for p in simulator.box_score['away'].values()])
-                away_reb = sum([p['REB'] for p in simulator.box_score['away'].values()])
-                away_ast = sum([p['AST'] for p in simulator.box_score['away'].values()])
-                away_to = sum([p['TO'] for p in simulator.box_score['away'].values()])
-                away_3pm = sum([p['3PM'] for p in simulator.box_score['away'].values()])
+                st.markdown(f"### {away_team_sim} Stats")
+                away_stats = {
+                    'Final Score': simulator.away_score,
+                    'FG%': f"{(sum([p['PTS'] for p in simulator.box_score['away'].values()]) / max(sum([p['PTS'] for p in simulator.box_score['away'].values()]) * 2, 1) * 100):.1f}%",
+                    'Total Rebounds': sum([p['REB'] for p in simulator.box_score['away'].values()]),
+                    'Total Assists': sum([p['AST'] for p in simulator.box_score['away'].values()]),
+                    '3-Pointers Made': sum([p['3PM'] for p in simulator.box_score['away'].values()]),
+                    'Turnovers': sum([p['TO'] for p in simulator.box_score['away'].values()]),
+                }
                 
-                c1, c2 = st.columns(2)
-                c1.metric("FG", f"{away_fgm}-{away_fga}")
-                c2.metric("FT", f"{away_ftm}-{away_fta}")
-                c1.metric("3-Pointers", f"{away_3pm}")
-                c2.metric("Rebounds", f"{away_reb}")
-                c1.metric("Assists", f"{away_ast}")
-                c2.metric("Turnovers", f"{away_to}")
+                for key, value in away_stats.items():
+                    st.metric(key, value)
             
-            # ========== RESET BUTTON ==========
+            # Reset button
             st.write("---")
             if st.button("🔄 Run Another Simulation", key="run_another_sim"):
                 st.session_state.simulation_running = False

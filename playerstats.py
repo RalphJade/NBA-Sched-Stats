@@ -1,9 +1,50 @@
 import streamlit as st
 import pandas as pd
 import requests
+from pathlib import Path
 from datetime import datetime, timedelta
 from dateutil import tz
 from cache_manager import get_cache_manager
+
+DATA_DIR = Path(__file__).resolve().parent / "data"
+
+
+def _load_local_roster_fallback(team_ids):
+    """Load roster data from the local CSV when live ESPN roster requests fail."""
+    rosters_path = DATA_DIR / "rosters.csv"
+    if not rosters_path.exists():
+        return {}
+
+    try:
+        rosters_df = pd.read_csv(rosters_path)
+    except Exception:
+        return {}
+
+    fallback = {}
+    for team_name in team_ids:
+        team_rows = rosters_df[rosters_df["Team"] == team_name]
+        if team_rows.empty:
+            continue
+
+        players = {}
+        for _, row in team_rows.iterrows():
+            name = row.get("Player Name")
+            if not isinstance(name, str) or not name:
+                continue
+            players[name] = {
+                "id": str(row.get("Player ID", "")),
+                "image": row.get("Image", ""),
+                "position": row.get("Position", "N/A"),
+                "jersey": row.get("Jersey", "N/A"),
+                "age": row.get("Age", "N/A"),
+                "height": row.get("Height", "N/A"),
+                "weight": row.get("Weight", "N/A"),
+                "experience": row.get("Experience", "N/A"),
+            }
+        if players:
+            fallback[team_name] = players
+
+    return fallback
 
 
 @st.cache_data(ttl=86400)
@@ -102,13 +143,20 @@ def fetch_rosters_for_teams(team_ids):
         except Exception:
             failed.append(team_name)
             players_dict[team_name] = {}
-    
+
     if failed:
         st.caption(f"⚠️ Could not load rosters for {len(failed)} team(s).")
-    
+
+    fallback_rosters = _load_local_roster_fallback(team_ids)
+    for team_name, fallback_players in fallback_rosters.items():
+        if not players_dict.get(team_name):
+            players_dict[team_name] = fallback_players
+
     cache.set(cache_key, players_dict)
     if not failed:
         st.caption("🔄 Fetched fresh roster data (cached for 24 hours)")
+    else:
+        st.caption("⚠️ Using local roster fallback due to live ESPN data issues")
     return players_dict
 
 

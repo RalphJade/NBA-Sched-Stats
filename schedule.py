@@ -1,9 +1,29 @@
 import streamlit as st
 import pandas as pd
 import requests
+from pathlib import Path
 from datetime import datetime, timedelta
 from dateutil import tz
 from cache_manager import get_cache_manager
+
+DATA_DIR = Path(__file__).resolve().parent / "data"
+
+
+def _load_local_team_fallback():
+    """Load team IDs from the local CSV file when ESPN data is unavailable."""
+    teams_path = DATA_DIR / "teams.csv"
+    if not teams_path.exists():
+        return {}
+
+    try:
+        teams_df = pd.read_csv(teams_path)
+        return {
+            row["Display Name"]: str(row["ID"])
+            for _, row in teams_df.iterrows()
+            if pd.notna(row.get("Display Name")) and pd.notna(row.get("ID"))
+        }
+    except Exception:
+        return {}
 
 @st.cache_data(ttl=3600)
 def fetch_upcoming_games_espn(days_ahead=7):
@@ -98,6 +118,15 @@ def fetch_upcoming_games_espn(days_ahead=7):
     else:
         df = pd.DataFrame()
 
+    if df.empty:
+        fallback_team_ids = _load_local_team_fallback()
+        if fallback_team_ids:
+            team_ids = fallback_team_ids
+        result = (start_date_manila.strftime("%Y-%m-%d"), end_date_manila.strftime("%Y-%m-%d"), df, team_ids)
+        cache.set(cache_key, result)
+        st.caption("⚠️ Live schedule unavailable; using local fallback team list")
+        return result
+
     result = (start_date_manila.strftime("%Y-%m-%d"), end_date_manila.strftime("%Y-%m-%d"), df, team_ids)
     cache.set(cache_key, result)
     st.caption(f"🔄 Fetched fresh upcoming games (cached for 24 hours)")
@@ -186,6 +215,10 @@ def fetch_tomorrow_games_espn():
             continue
 
     df = pd.DataFrame(games_list).drop(columns=["Game ID"]) if games_list else pd.DataFrame()
+    if df.empty:
+        fallback_team_ids = _load_local_team_fallback()
+        if fallback_team_ids:
+            team_ids = fallback_team_ids
     result = (tomorrow_manila.strftime("%Y-%m-%d"), df, team_ids)
     cache.set(cache_key, result)
     st.caption("🔄 Fetched fresh tomorrow's games (cached for 24 hours)")
