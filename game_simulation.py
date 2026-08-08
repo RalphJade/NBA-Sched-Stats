@@ -192,10 +192,20 @@ class NBAGameSimulator:
     
     def add_player_time(self, team_type, player_name, seconds):
         """Add time to player minutes"""
+        minutes = seconds / 60.0
         if team_type == 'home':
-            self.home_players[player_name].minutes_played += seconds / 60.0
+            self.home_players[player_name].minutes_played += minutes
+            self.box_score['home'][player_name]['MIN'] += minutes
         else:
-            self.away_players[player_name].minutes_played += seconds / 60.0
+            self.away_players[player_name].minutes_played += minutes
+            self.box_score['away'][player_name]['MIN'] += minutes
+    
+    def _allocate_minutes(self, seconds):
+        """Allocate minutes to all active on-court players for both teams."""
+        for player_name in self.home_on_court:
+            self.add_player_time('home', player_name, seconds / 5.0)
+        for player_name in self.away_on_court:
+            self.add_player_time('away', player_name, seconds / 5.0)
     
     def simulate_possession(self, offensive_team):
         """Simulate one possession (~20-30 seconds)"""
@@ -207,6 +217,7 @@ class NBAGameSimulator:
             return 'error'
         
         possession_time = np.random.uniform(12, 24)  # 12-24 seconds per possession
+        self._allocate_minutes(possession_time)
         ball_handler = random.choice(lineup)
         handler = players[ball_handler]
         

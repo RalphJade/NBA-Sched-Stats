@@ -845,11 +845,27 @@ with tab6:
     # Get rosters (need to be defined before columns so they persist)
     home_roster_sim = all_players.get(home_team_sim, {})
     away_roster_sim = all_players.get(away_team_sim, {})
+    home_logo = all_team_ids.get(home_team_sim, {}).get("logo", "")
+    away_logo = all_team_ids.get(away_team_sim, {}).get("logo", "")
     
-    # Show player rosters and ratings
+    # Matchup header
     st.write("---")
-    st.subheader("📊 Team Ratings")
-    
+    match_col1, match_col2, match_col3 = st.columns([3, 1, 3])
+    with match_col1:
+        if home_logo:
+            st.image(home_logo, width=90)
+        st.markdown(f"### {home_team_sim}")
+        st.caption("Home Team")
+    with match_col2:
+        st.markdown("### VS")
+        st.write("🏀 Game Simulation Matchup")
+    with match_col3:
+        if away_logo:
+            st.image(away_logo, width=90)
+        st.markdown(f"### {away_team_sim}")
+        st.caption("Away Team")
+
+    st.markdown("#### Top Available Players")
     col1, col2 = st.columns(2)
     
     with col1:
@@ -859,20 +875,20 @@ with tab6:
             home_roster_data = []
             for player_name in list(home_roster_sim.keys())[:8]:  # Top 8 players
                 player_stats = home_roster_sim.get(player_name)
+                player_stats_df = player_stats if isinstance(player_stats, pd.DataFrame) else pd.DataFrame()
                 
-                if isinstance(player_stats, pd.DataFrame) and not player_stats.empty:
-                    # Create player rating
-                    player_rating = gsim.PlayerRating(player_stats, player_name)
-                    rating_card = gsim.get_player_rating_card(player_rating)
-                    
-                    home_roster_data.append({
-                        'Player': player_name,
-                        'Overall': rating_card['Overall'],
-                        '3-Pt': rating_card['3-Pt'],
-                        'Playmaker': rating_card['Playmaker'],
-                        'Rebounder': rating_card['Rebounder'],
-                        'Defender': rating_card['Defender']
-                    })
+                # Create player rating
+                player_rating = gsim.PlayerRating(player_stats_df, player_name)
+                rating_card = gsim.get_player_rating_card(player_rating)
+                
+                home_roster_data.append({
+                    'Player': player_name,
+                    'Overall': rating_card['Overall'],
+                    '3-Pt': rating_card['3-Pt'],
+                    'Playmaker': rating_card['Playmaker'],
+                    'Rebounder': rating_card['Rebounder'],
+                    'Defender': rating_card['Defender']
+                })
             
             if home_roster_data:
                 st.dataframe(pd.DataFrame(home_roster_data), hide_index=True, use_container_width=True)
@@ -884,29 +900,29 @@ with tab6:
             away_roster_data = []
             for player_name in list(away_roster_sim.keys())[:8]:  # Top 8 players
                 player_stats = away_roster_sim.get(player_name)
+                player_stats_df = player_stats if isinstance(player_stats, pd.DataFrame) else pd.DataFrame()
                 
-                if isinstance(player_stats, pd.DataFrame) and not player_stats.empty:
-                    # Create player rating
-                    player_rating = gsim.PlayerRating(player_stats, player_name)
-                    rating_card = gsim.get_player_rating_card(player_rating)
-                    
-                    away_roster_data.append({
-                        'Player': player_name,
-                        'Overall': rating_card['Overall'],
-                        '3-Pt': rating_card['3-Pt'],
-                        'Playmaker': rating_card['Playmaker'],
-                        'Rebounder': rating_card['Rebounder'],
-                        'Defender': rating_card['Defender']
-                    })
+                # Create player rating
+                player_rating = gsim.PlayerRating(player_stats_df, player_name)
+                rating_card = gsim.get_player_rating_card(player_rating)
+                
+                away_roster_data.append({
+                    'Player': player_name,
+                    'Overall': rating_card['Overall'],
+                    '3-Pt': rating_card['3-Pt'],
+                    'Playmaker': rating_card['Playmaker'],
+                    'Rebounder': rating_card['Rebounder'],
+                    'Defender': rating_card['Defender']
+                })
             
             if away_roster_data:
                 st.dataframe(pd.DataFrame(away_roster_data), hide_index=True, use_container_width=True)
     
     # Simulation controls
     st.write("---")
-    col1, col2, col3 = st.columns([1, 1, 2])
+    control1, control2, control3 = st.columns([2, 1, 2])
     
-    with col1:
+    with control1:
         speed = st.select_slider(
             "Simulation Speed",
             options=["🐢 Slow", "🏃 Normal", "⚡ Fast"],
@@ -917,28 +933,29 @@ with tab6:
     speed_map = {"🐢 Slow": 0.5, "🏃 Normal": 0.2, "⚡ Fast": 0.05}
     delay = speed_map[speed]
     
-    with col2:
+    with control2:
         if st.button("🎬 START GAME", key="start_sim", use_container_width=True):
             st.session_state.simulation_running = True
+        if st.button("🔄 Reset Simulation", key="reset_sim", use_container_width=True):
+            st.session_state.simulation_running = False
+            st.experimental_rerun()
     
-    with col3:
-        st.info("Click START GAME to begin the simulation!")
+    with control3:
+        st.info("Click START GAME to begin the simulation. Reset will clear the current run.")
     
     # Run simulation
     if st.session_state.get('simulation_running', False):
         st.write("---")
         
-        # Prepare player stats
+        # Prepare player stats for simulation
         home_roster_for_sim = {}
         away_roster_for_sim = {}
         
         for player_name, stats in home_roster_sim.items():
-            if isinstance(stats, pd.DataFrame) and not stats.empty:
-                home_roster_for_sim[player_name] = stats
+            home_roster_for_sim[player_name] = stats if isinstance(stats, pd.DataFrame) else pd.DataFrame()
         
         for player_name, stats in away_roster_sim.items():
-            if isinstance(stats, pd.DataFrame) and not stats.empty:
-                away_roster_for_sim[player_name] = stats
+            away_roster_for_sim[player_name] = stats if isinstance(stats, pd.DataFrame) else pd.DataFrame()
         
         if home_roster_for_sim and away_roster_for_sim:
             # Create simulator
@@ -952,8 +969,9 @@ with tab6:
             # Use placeholders for live updates
             score_placeholder = st.empty()
             play_placeholder = st.empty()
+            summary_placeholder = st.empty()
+            progress_bar = st.progress(0)
             
-            # Simulate game
             for q in range(1, 5):
                 simulator.quarter = q
                 simulator.time = 12.0
@@ -971,33 +989,38 @@ with tab6:
                     with col1:
                         st.markdown(f"# {simulator.home_score}", unsafe_allow_html=True)
                     with col2:
-                        pass
+                        st.markdown("\n")
                     with col3:
                         st.markdown(f"# {simulator.away_score}", unsafe_allow_html=True)
                 
-                # Simulate quarter
-                simulator.simulate_quarter()
+                simulator.simulate_quarter(q)
+                progress_bar.progress(min(100, q * 25))
                 
-                # Display plays from this quarter
+                quarter_plays = [p for p in simulator.play_log if p['quarter'] == q]
+                quarter_df = gsim.format_play_log(quarter_plays)
+                
                 with play_placeholder.container():
-                    st.subheader(f"📹 Q{q} Play-by-Play")
-                    
-                    quarter_plays = [p for p in simulator.play_log if p['quarter'] == q]
-                    
-                    for play in quarter_plays:
-                        if play['description'].startswith('END OF'):
-                            st.success(f"### {play['description']}")
-                        elif '💔' in play['description']:
-                            st.warning(play['description'])
-                        elif '🔥' in play['description'] or '🎯' in play['description']:
-                            st.success(f"✨ {play['description']}")
-                        else:
-                            st.write(play['description'])
-                        
-                        time.sleep(delay)
+                    st.subheader(f"📹 Q{q} Summary")
+                    st.markdown(
+                        f"**Score after Q{q}:** {home_team_sim} {simulator.home_score} — {away_team_sim} "
+                        f"{simulator.away_score}"
+                    )
+                    if not quarter_df.empty:
+                        st.dataframe(
+                            quarter_df[['Time', 'Play', 'Score']].tail(12),
+                            hide_index=True,
+                            use_container_width=True
+                        )
+                    else:
+                        st.info("No plays recorded for this quarter.")
+                
+                with summary_placeholder.container():
+                    st.info(f"Q{q} completed. Running total: {simulator.home_score} - {simulator.away_score}")
                 
                 if q < 4:
                     st.write("---")
+            
+            progress_bar.progress(100)
             
             # Final score
             st.write("---")
@@ -1020,7 +1043,25 @@ with tab6:
             with col3:
                 st.markdown(f"# {simulator.away_score}", unsafe_allow_html=True)
             
-            # Display box scores
+            with st.expander("📜 Full Play-by-Play Log", expanded=False):
+                full_log_df = gsim.format_play_log(simulator.play_log)
+                st.dataframe(
+                    full_log_df[['Q', 'Time', 'Play', 'Score']],
+                    hide_index=True,
+                    use_container_width=True
+                )
+            
+            winner = "🏆" if simulator.home_score > simulator.away_score else "⚔️"
+            st.markdown("#### Game Result Summary")
+            result_col1, result_col2, result_col3 = st.columns([2, 1, 2])
+            with result_col1:
+                st.metric(home_team_sim, simulator.home_score, delta="Home final")
+            with result_col2:
+                st.markdown(f"### {winner}")
+            with result_col3:
+                st.metric(away_team_sim, simulator.away_score, delta="Away final")
+            
+            st.markdown(f"**Final Winner:** {home_team_sim if simulator.home_score > simulator.away_score else away_team_sim}")
             st.write("---")
             st.subheader("📊 Box Scores")
             
